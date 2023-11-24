@@ -1,11 +1,14 @@
-#include "Application.h"
+#include "Window.h"
 #include "Constants.h"
+
+#include "InputManager.h"
 
 #include <iostream>
 
 
 namespace MyCraft {
-	Application::Application()
+
+	Window::Window()
 		:m_WindowHeight(SCREEN_HEIGHT),
 		m_WindowWidth(SCREEN_WIDTH),
 		m_WindowTitle(TITLE),
@@ -13,10 +16,12 @@ namespace MyCraft {
 
 	{
 	}
-	Application::~Application()
+
+	Window::~Window()
 	{
 	}
-	void Application::Init()
+
+	void Window::Init()
 	{
 		/* Initialize the library */
 		if (!glfwInit())
@@ -49,12 +54,35 @@ namespace MyCraft {
 
 		glViewport(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
 
+		InputManager::Init(m_Window);
 	}
-	void Application::Run()
+
+	void Window::Run()
 	{
 		/* Loop until the user closes the window */
 		while (!glfwWindowShouldClose(m_Window))
 		{
+			glfwPollEvents();
+			/* Update */
+			if (InputManager::IsKeyDown(GLFW_KEY_W)) {
+				printf("Pressed the W key\n");
+			}
+
+			if (InputManager::IsKeyDown(GLFW_KEY_ESCAPE)) {
+				glfwSetWindowShouldClose(m_Window, GLFW_TRUE);
+			}
+
+			if (InputManager::IsMouseButtonDown(GLFW_MOUSE_BUTTON_RIGHT)) {
+				printf("Clicked RMB\n");
+			}
+
+			if (InputManager::IsMouseButtonDown(GLFW_MOUSE_BUTTON_LEFT)) {
+				printf("Clicked LMB\n");
+			}
+
+			auto position = InputManager::GetMousePosition();
+			std::cout << position.first << " : " << position.second << std::endl;
+
 			/* Render here */
 			glClearColor(0.0f, 1.0f, 1.0f, 1.0f);
 			glClear(GL_COLOR_BUFFER_BIT);
@@ -63,12 +91,13 @@ namespace MyCraft {
 			glfwSwapBuffers(m_Window);
 
 			/* Poll for and process events */
-			glfwPollEvents();
 		}
 	}
-	void Application::ShutDown()
+
+	void Window::ShutDown()
 	{
 		glfwDestroyWindow(m_Window);
 		glfwTerminate();
 	}
+
 }

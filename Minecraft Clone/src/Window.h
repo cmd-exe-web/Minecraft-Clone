@@ -5,10 +5,11 @@
 #include <string>
 
 namespace MyCraft {
-	class Application {
+
+	class Window {
 	public:
-		Application();
-		~Application();
+		Window();
+		~Window();
 
 		void Init();
 		void Run();
@@ -19,4 +20,5 @@ namespace MyCraft {
 		std::string m_WindowTitle;
 		GLFWwindow* m_Window;
 	};
+
 }

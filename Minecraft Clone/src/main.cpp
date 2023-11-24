@@ -1,17 +1,12 @@
-#include "Application.h"
-
-void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods) {
-    if (key == GLFW_KEY_E && action == GLFW_PRESS)
-        printf("Pressed E key\n");
-}
+#include "Window.h"
 
 int main(void)
 {
-    MyCraft::Application app;
+    MyCraft::Window window;
 
-    app.Init();
-    app.Run();
-    app.ShutDown();
+    window.Init();
+    window.Run();
+    window.ShutDown();
 
 	return 0;
 }
