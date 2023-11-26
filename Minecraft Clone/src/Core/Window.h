@@ -4,6 +4,12 @@
 
 #include <string>
 
+#include "Renderer/VertexArray.h"
+#include "Renderer/VertexBuffer.h"
+#include "Renderer/VertexBufferLayout.h"
+#include "Renderer/IndexBuffer.h"
+#include "Renderer/Shader.h"
+
 namespace MyCraft {
 
 	class Window {
@@ -12,6 +18,7 @@ namespace MyCraft {
 		~Window();
 
 		void Init();
+		void SendDataToOpenGL();
 		void Run();
 		void ShutDown();
 	private:
@@ -19,6 +26,11 @@ namespace MyCraft {
 		int m_WindowWidth;
 		std::string m_WindowTitle;
 		GLFWwindow* m_Window;
+		VertexArray* VAO;
+		VertexBuffer* VBO;
+		VertexBufferLayout* layout;
+		IndexBuffer* IBO;
+		Shader* shader;
 	};
 
 }
