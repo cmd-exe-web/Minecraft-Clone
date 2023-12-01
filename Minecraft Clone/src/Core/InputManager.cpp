@@ -44,14 +44,14 @@ namespace MyCraft {
 		void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods)
 		{
 			if (key >= 0 && key < GLFW_KEY_LAST) {
-				m_KeyPressedData[key] = action == GLFW_PRESS;
+				m_KeyPressedData[key] = action != GLFW_RELEASE;
 			}
 		}
 
 		void MouseButtonCallback(GLFWwindow* window, int button, int action, int mods)
 		{
 			if (button >= 0 && button < GLFW_MOUSE_BUTTON_LAST) {
-				m_MouseButtonPressedData[button] = action == GLFW_PRESS;
+				m_MouseButtonPressedData[button] = action != GLFW_RELEASE;
 			}
 		}
 

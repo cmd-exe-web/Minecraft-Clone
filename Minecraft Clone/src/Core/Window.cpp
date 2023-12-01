@@ -15,7 +15,7 @@ glm::mat4 rotation(1.0f);
 glm::mat4 view(1.0f);
 glm::mat4 proj(1.0f);
 
-const float SPEED = 5.0f;
+const float SPEED = 0.01f;
 float positionX = 0.0f;
 float positionY = 0.0f;
 
@@ -146,19 +146,19 @@ namespace MyCraft {
 			/* Update */
 			if (InputManager::IsKeyDown(GLFW_KEY_W)) {
 				printf("Pressed the W key\n");
-				positionY += 0.05f;
+				positionY += SPEED;
 			}
 			if (InputManager::IsKeyDown(GLFW_KEY_A)) {
 				printf("Pressed the A key\n");
-				positionX -= 0.05f;
+				positionX -= SPEED;
 			}
 			if (InputManager::IsKeyDown(GLFW_KEY_S)) {
 				printf("Pressed the S key\n");
-				positionY -= 0.05f;
+				positionY -= SPEED;
 			}
 			if (InputManager::IsKeyDown(GLFW_KEY_D)) {
 				printf("Pressed the D key\n");
-				positionX += 0.05f;
+				positionX += SPEED;
 			}
 
 			if (InputManager::IsKeyDown(GLFW_KEY_ESCAPE)) {
