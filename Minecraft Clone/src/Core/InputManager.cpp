@@ -6,7 +6,7 @@ namespace MyCraft {
 
 	namespace InputManager {
 
-		bool m_KeyPressedData[GLFW_KEY_LAST];
+		std::unordered_map<int, int> m_KeyStates;
 		bool m_MouseButtonPressedData[GLFW_MOUSE_BUTTON_LAST];
 		double m_MouseX = 0.0;
 		double m_MouseY = 0.0;
@@ -20,10 +20,20 @@ namespace MyCraft {
 			glfwSetScrollCallback(window, InputManager::MouseScrollCallback);
 		}
 
+		// Checks if a key is tapped
 		bool IsKeyDown(int key)
 		{
-			if (key >= 0 && key < GLFW_KEY_LAST) {
-				return m_KeyPressedData[key];
+			if (m_KeyStates.find(key) != m_KeyStates.end() && m_KeyStates[key] == GLFW_PRESS) {
+				return true;
+			}
+			return false;
+
+		}
+		// Checks if a key is held down
+		bool IsKeyPressed(int key)
+		{
+			if (m_KeyStates.find(key) != m_KeyStates.end() && m_KeyStates[key] != GLFW_RELEASE) {
+				return true;
 			}
 			return false;
 		}
@@ -43,9 +53,7 @@ namespace MyCraft {
 
 		void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods)
 		{
-			if (key >= 0 && key < GLFW_KEY_LAST) {
-				m_KeyPressedData[key] = action != GLFW_RELEASE;
-			}
+			m_KeyStates[key] = action;
 		}
 
 		void MouseButtonCallback(GLFWwindow* window, int button, int action, int mods)

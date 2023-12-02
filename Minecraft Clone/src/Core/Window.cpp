@@ -106,7 +106,7 @@ namespace MyCraft {
 			camera.ProcessMouseEvent(m_Window);
 			/* Update */
 
-			if (InputManager::IsKeyDown(GLFW_KEY_ESCAPE)) {
+			if (InputManager::IsKeyPressed(GLFW_KEY_ESCAPE)) {
 				glfwSetWindowShouldClose(m_Window, GLFW_TRUE);
 			}
 

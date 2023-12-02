@@ -46,11 +46,6 @@ void Camera::ProcessMouseEvent(GLFWwindow* window)
 		float dx = xPos - m_LastMousePosition.x;
 		float dy = yPos - m_LastMousePosition.y;
 
-		// if (abs(dx) > 20.f || abs(dy) > 20.0f) {
-			// m_LastMousePosition = { xPos, yPos };
-			// return;
-		// }
-
 		std::cout << dx << " : " << dy << std::endl;
 
 		m_LastMousePosition = { xPos, yPos };
