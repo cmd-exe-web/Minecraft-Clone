@@ -5,48 +5,60 @@
 Cube::Cube()
 	:VAO(nullptr), VBO(nullptr), layout(nullptr)
 {
+/*
+	7- - - - - - - --6
+	|\               |\
+	| \				 | \
+	|  3- - - - - - - - 2             Y
+	|  |			 |	|             |
+	|  |			 |	|             | 
+	|  |	   .	 |	|             |_ _ _ _ X
+	4- |- - - - - - -5	|            /
+	 \ |			  \	|           /
+	  \|			   \|          Z
+	   0- - - - - - - --1
+*/
 	GLfloat vertices[] = {
-	//      Position                        Color
-		-0.5f, -0.5f,  0.5f,         1.0f, 0.5f, 1.0f, 1.0f,    // 0         Bottom left front
-		 0.5f, -0.5f,  0.5f,         0.0f, 1.0f, 0.0f, 1.0f,    // 1         Bottom right front
-		 0.5f, -0.5f, -0.5f,         0.0f, 0.0f, 1.0f, 1.0f,    // 2         Bottom right back
-		-0.5f, -0.5f, -0.5f,         0.2f, 0.5f, 0.3f, 1.0f,    // 3         Bottom left back
+	//      Position           	    TexCoord
+		-0.5f, -0.5f,  0.5f,       0.0f, 0.0f,       // 0
+		 0.5f, -0.5f,  0.5f,       1.0f, 0.0f,       // 1
+		 0.5f,  0.5f,  0.5f,       1.0f, 1.0f,       // 2
+		-0.5f,  0.5f,  0.5f,       0.0f, 1.0f,       // 3
 
-		-0.5f,  0.5f,  0.5f,         1.0f, 0.0f, 0.0f, 1.0f,    // 4            Top left front
-		 0.5f,  0.5f,  0.5f,         0.0f, 1.0f, 0.0f, 1.0f,    // 5            Top right front
-		 0.5f,  0.5f, -0.5f,         0.0f, 0.0f, 1.0f, 1.0f,    // 6            Top right back
-		-0.5f,  0.5f, -0.5f,         0.2f, 0.6f, 0.8f, 1.0f,    // 7            Top left back
+		-0.5f, -0.5f, -0.5f,       0.0f, 0.0f,       // 4
+		 0.5f, -0.5f, -0.5f,       1.0f, 0.0f,       // 5
+		 0.5f,  0.5f, -0.5f,       1.0f, 1.0f,       // 6
+		-0.5f,  0.5f, -0.5f,       0.0f, 1.0f,       // 7
+	};
+	GLuint indices[] = {
+		0, 1, 2, 
+		2, 3, 0,  // Front
 
+		6, 5, 4,
+		4, 7, 6, // Back
+
+		0, 4, 5,
+		5, 1, 0,  // Base
+
+		3, 2, 6,
+		6, 7, 3,  // Top
+
+		4, 0, 3,
+		3, 7, 4, // Left
+
+		1, 5, 6,
+		6, 2, 1  // right
 	};
 	
 	VAO = new VertexArray;
 	VBO = new VertexBuffer(vertices, sizeof(vertices));
 	layout = new VertexBufferLayout;
 	layout->Push<float>(3);
-	layout->Push<float>(4);
+	layout->Push<float>(2);
 
 	VAO->AddBuffers(*VBO, *layout);
 	VAO->Unbind();
 
-	GLuint indices[] = {
-		0, 2, 1, 
-		0, 3, 2,  // Base
-
-		0, 1, 5,
-		0, 5, 4,  // Front
-
-		4, 5, 6,
-		4, 6, 7,  // Top
-
-		2, 3, 7,
-		2, 7, 6, // Back
-
-		3, 0, 4,
-		3, 4, 7, // Left
-
-		1, 2, 6,
-		1, 6, 5  // right
-	};
 	IBO = new IndexBuffer(indices, sizeof(indices));
 	IBO->Unbind();
 }

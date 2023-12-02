@@ -8,6 +8,7 @@
 #include "InputManager.h"
 #include "Renderer/Shader.h"
 #include "Renderer/Vertex.h"
+#include "Renderer/Texture.h"
 
 namespace MyCraft {
 
@@ -79,7 +80,7 @@ namespace MyCraft {
 		glDebugMessageCallback(MessageCallback, 0);
 
 
-		glEnable(GL_CULL_FACE);
+		// glEnable(GL_CULL_FACE);
 		glEnable(GL_DEPTH_TEST);
 		glViewport(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
 
@@ -94,9 +95,16 @@ namespace MyCraft {
 	void Window::Run()
 	{
 		SendDataToOpenGL();
-		Shader shader("res/shaders/Basic.shader");
-		shader.Unbind();
-		glm::mat4 view;
+		Shader colorShader("res/shaders/Basic.shader");
+		colorShader.Unbind();
+
+		Shader textureShader("res/shaders/Texture.shader");
+		Texture dirtTexture(GL_TEXTURE_2D, "res/textures/grass_side.png", Format::PNG);
+		dirtTexture.Load();
+		dirtTexture.Bind(GL_TEXTURE0);
+
+		textureShader.SetUniform1i("u_Tex0", 0);
+
 		/* Loop until the user closes the window */
 		while (!glfwWindowShouldClose(m_Window))
 		{
@@ -129,9 +137,9 @@ namespace MyCraft {
 
 			// glm::mat4 uProj = glm::ortho(-SCREEN_WIDTH / 100.0f, SCREEN_WIDTH / 100.0f, -SCREEN_HEIGHT / 100.0f, SCREEN_HEIGHT / 100.0f);
 			glm::mat4 uProj = glm::perspective(glm::radians(60.0f), (float)SCREEN_WIDTH / SCREEN_HEIGHT, 0.1f, 100.0f);
-			shader.Bind();
-			shader.SetUniformMat4("u_Proj", camera.GetProjectionMatrix());
-			shader.SetUniformMat4("u_View", camera.GetViewMatrix());
+			textureShader.Bind();
+			textureShader.SetUniformMat4("u_Proj", camera.GetProjectionMatrix());
+			textureShader.SetUniformMat4("u_View", camera.GetViewMatrix());
 			Draw();
 			
 			/* Swap front and back buffers */
