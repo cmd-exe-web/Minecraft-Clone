@@ -9,6 +9,8 @@
 #include "Renderer/VertexBufferLayout.h"
 #include "Renderer/IndexBuffer.h"
 #include "Renderer/Shader.h"
+#include "Renderer/Cube.h"
+#include "Renderer/Camera.h"
 
 namespace MyCraft {
 
@@ -20,17 +22,17 @@ namespace MyCraft {
 		void Init();
 		void SendDataToOpenGL();
 		void Run();
+		void Update();
+		void Draw();
 		void ShutDown();
 	private:
 		int m_WindowHeight;
 		int m_WindowWidth;
 		std::string m_WindowTitle;
 		GLFWwindow* m_Window;
-		VertexArray* VAO;
-		VertexBuffer* VBO;
-		VertexBufferLayout* layout;
-		IndexBuffer* IBO;
-		Shader* shader;
+		bool m_WireFrameMode;
+		Camera camera;
+		Cube* cube;
 	};
 
 }
