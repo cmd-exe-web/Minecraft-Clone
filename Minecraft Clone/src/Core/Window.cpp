@@ -10,6 +10,8 @@
 #include "Renderer/Vertex.h"
 #include "Renderer/Texture.h"
 
+#include "Scene/Chunk.h"
+
 namespace MyCraft {
 
 	void GLAPIENTRY
@@ -80,12 +82,13 @@ namespace MyCraft {
 		glDebugMessageCallback(MessageCallback, 0);
 
 
-		glEnable(GL_CULL_FACE);
+		// glEnable(GL_CULL_FACE);
 		glEnable(GL_DEPTH_TEST);
 		glViewport(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
 
 		InputManager::Init(m_Window);
 		cube = new Cube();
+		cube2 = new Cube();
 	}
 
 	void Window::SendDataToOpenGL()
@@ -104,6 +107,13 @@ namespace MyCraft {
 		textureShader.Bind();
 		textureShader.SetUniform1i("u_Tex0", 0);
 		textureShader.Unbind();
+		cube->SetPosition(glm::vec3(0.0f, 0.0f, 0.0f));
+		cube2->SetPosition(glm::vec3(2.0f, 0.0f, 0.0f));
+
+
+		// Chunk
+		Chunk chunk1;
+		chunk1.InitChunk();
 		/* Loop until the user closes the window */
 		while (!glfwWindowShouldClose(m_Window))
 		{
@@ -131,8 +141,10 @@ namespace MyCraft {
 			textureShader.Bind();
 			textureShader.SetUniformMat4("u_Proj", camera.GetProjectionMatrix());
 			textureShader.SetUniformMat4("u_View", camera.GetViewMatrix());
-			Draw();
+
+			chunk1.Draw(textureShader);
 			
+
 			/* Swap front and back buffers */
 			glfwSwapBuffers(m_Window);
 		}
@@ -144,7 +156,6 @@ namespace MyCraft {
 
 	void Window::Draw()
 	{
-		cube->Draw();
 	}
 
 	void Window::ShutDown()

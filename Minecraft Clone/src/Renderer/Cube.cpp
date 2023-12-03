@@ -1,9 +1,10 @@
 #include "Cube.h"
 
 #include <glad/glad.h>
+#include "glm/gtc/matrix_transform.hpp"
 
 Cube::Cube()
-	:VAO(nullptr), VBO(nullptr), layout(nullptr)
+	:VAO(nullptr), VBO(nullptr), layout(nullptr), model(glm::mat4(1.0f))
 {
 /*
 	7- - - - - - - --6
@@ -93,8 +94,9 @@ Cube::~Cube()
 {
 }
 
-void Cube::Update()
+void Cube::SetPosition(glm::vec3 position)
 {
+	model = glm::translate(glm::mat4(1.0f), position);
 }
 
 void Cube::Draw()

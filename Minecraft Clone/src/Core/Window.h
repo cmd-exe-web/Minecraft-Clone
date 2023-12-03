@@ -33,6 +33,7 @@ namespace MyCraft {
 		bool m_WireFrameMode;
 		Camera camera;
 		Cube* cube;
+		Cube* cube2;
 	};
 
 }

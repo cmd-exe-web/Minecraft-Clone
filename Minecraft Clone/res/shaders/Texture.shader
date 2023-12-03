@@ -6,11 +6,12 @@ layout(location = 1) in vec2 texCoord;
 
 uniform mat4 u_Proj;
 uniform mat4 u_View;
+uniform mat4 u_Model;
 
 out vec2 v_TexCoord;
 
 void main() {
-	gl_Position = u_Proj * u_View * position;
+	gl_Position = u_Proj * u_View * u_Model * position;
 	v_TexCoord = texCoord;
 }
 
