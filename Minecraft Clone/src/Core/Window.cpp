@@ -80,7 +80,7 @@ namespace MyCraft {
 		glDebugMessageCallback(MessageCallback, 0);
 
 
-		// glEnable(GL_CULL_FACE);
+		glEnable(GL_CULL_FACE);
 		glEnable(GL_DEPTH_TEST);
 		glViewport(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
 
@@ -95,16 +95,15 @@ namespace MyCraft {
 	void Window::Run()
 	{
 		SendDataToOpenGL();
-		Shader colorShader("res/shaders/Basic.shader");
-		colorShader.Unbind();
 
 		Shader textureShader("res/shaders/Texture.shader");
-		Texture dirtTexture(GL_TEXTURE_2D, "res/textures/grass_side.png", Format::PNG);
+		Texture dirtTexture(GL_TEXTURE_2D, "res/textures/dirt-block-cubemap.png", Format::PNG);
 		dirtTexture.Load();
 		dirtTexture.Bind(GL_TEXTURE0);
 
+		textureShader.Bind();
 		textureShader.SetUniform1i("u_Tex0", 0);
-
+		textureShader.Unbind();
 		/* Loop until the user closes the window */
 		while (!glfwWindowShouldClose(m_Window))
 		{
@@ -123,20 +122,12 @@ namespace MyCraft {
 				glPolygonMode(GL_FRONT_AND_BACK, m_WireFrameMode ? GL_LINE : GL_FILL);
 			}
 
-			//if (InputManager::IsMouseButtonDown(GLFW_MOUSE_BUTTON_RIGHT)) {
-			//	printf("Clicked RMB\n");
-			//}
-
-			//if (InputManager::IsMouseButtonDown(GLFW_MOUSE_BUTTON_LEFT)) {
-			//	printf("Clicked LMB\n");
-			//}
-
 			/* Render here */
 			glClearColor(0.0f, 1.0f, 1.0f, 1.0f);
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-			// glm::mat4 uProj = glm::ortho(-SCREEN_WIDTH / 100.0f, SCREEN_WIDTH / 100.0f, -SCREEN_HEIGHT / 100.0f, SCREEN_HEIGHT / 100.0f);
 			glm::mat4 uProj = glm::perspective(glm::radians(60.0f), (float)SCREEN_WIDTH / SCREEN_HEIGHT, 0.1f, 100.0f);
+			dirtTexture.Bind(GL_TEXTURE0);
 			textureShader.Bind();
 			textureShader.SetUniformMat4("u_Proj", camera.GetProjectionMatrix());
 			textureShader.SetUniformMat4("u_View", camera.GetViewMatrix());
