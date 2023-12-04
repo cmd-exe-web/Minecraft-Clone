@@ -32,8 +32,6 @@ namespace MyCraft {
 		GLFWwindow* m_Window;
 		bool m_WireFrameMode;
 		Camera camera;
-		Cube* cube;
-		Cube* cube2;
 	};
 
 }

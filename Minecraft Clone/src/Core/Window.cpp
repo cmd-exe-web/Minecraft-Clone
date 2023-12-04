@@ -33,7 +33,6 @@ namespace MyCraft {
 		m_WindowWidth(SCREEN_WIDTH),
 		m_WindowTitle(TITLE),
 		m_Window(nullptr),
-		cube(nullptr),
 		m_WireFrameMode(false)
 	{
 	}
@@ -87,8 +86,6 @@ namespace MyCraft {
 		glViewport(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
 
 		InputManager::Init(m_Window);
-		cube = new Cube();
-		cube2 = new Cube();
 	}
 
 	void Window::SendDataToOpenGL()
@@ -107,9 +104,6 @@ namespace MyCraft {
 		textureShader.Bind();
 		textureShader.SetUniform1i("u_Tex0", 0);
 		textureShader.Unbind();
-		cube->SetPosition(glm::vec3(0.0f, 0.0f, 0.0f));
-		cube2->SetPosition(glm::vec3(2.0f, 0.0f, 0.0f));
-
 
 		// Chunk
 		Chunk chunk1;

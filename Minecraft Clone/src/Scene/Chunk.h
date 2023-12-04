@@ -14,5 +14,5 @@ public:
 	void Draw(Shader& shader);
 private:
 	unsigned int m_Id;
-	std::vector<std::vector<Cube>> m_Chunk{ 16, std::vector<Cube>{16} };
+	std::vector<std::vector<std::vector<Cube>>> m_Chunk{ 16, std::vector<std::vector<Cube>> {16, std::vector<Cube> {16}} };
 };
