@@ -6,11 +6,8 @@
 
 #include "Constants.h"
 #include "InputManager.h"
-#include "Renderer/Shader.h"
-#include "Renderer/Vertex.h"
-#include "Renderer/Texture.h"
-
-#include "Scene/Chunk.h"
+#include "Graphics/Shader.h"
+#include "Graphics/Texture.h"
 
 namespace MyCraft {
 
@@ -34,14 +31,6 @@ namespace MyCraft {
 		m_WindowTitle(TITLE),
 		m_Window(nullptr),
 		m_WireFrameMode(false)
-	{
-	}
-
-	Window::~Window()
-	{
-	}
-
-	void Window::Init()
 	{
 		/* Initialize the library */
 		if (!glfwInit())
@@ -84,71 +73,9 @@ namespace MyCraft {
 		// glEnable(GL_CULL_FACE);
 		glEnable(GL_DEPTH_TEST);
 		glViewport(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
-
-		InputManager::Init(m_Window);
 	}
 
-	void Window::SendDataToOpenGL()
-	{
-	}
-
-	void Window::Run()
-	{
-		SendDataToOpenGL();
-
-		Shader textureShader("res/shaders/Texture.shader");
-		Texture dirtTexture(GL_TEXTURE_2D, "res/textures/dirt-block-cubemap.png", Format::PNG);
-		dirtTexture.Load();
-		dirtTexture.Bind(GL_TEXTURE0);
-
-		textureShader.Bind();
-		textureShader.SetUniform1i("u_Tex0", 0);
-		textureShader.Unbind();
-
-		// Chunk
-		Chunk chunk1;
-		chunk1.InitChunk();
-		/* Loop until the user closes the window */
-		while (!glfwWindowShouldClose(m_Window))
-		{
-			/* Poll for and process events */
-			glfwPollEvents();
-			camera.ProcessKeyboardEvents(m_Window, 0.0f);
-			camera.ProcessMouseEvent(m_Window);
-			/* Update */
-
-			if (InputManager::IsKeyPressed(GLFW_KEY_ESCAPE)) {
-				glfwSetWindowShouldClose(m_Window, GLFW_TRUE);
-			}
-
-			if (InputManager::IsKeyDown(GLFW_KEY_G)) {
-				m_WireFrameMode = !m_WireFrameMode;
-				glPolygonMode(GL_FRONT_AND_BACK, m_WireFrameMode ? GL_LINE : GL_FILL);
-			}
-
-			/* Render here */
-			glClearColor(0.0f, 1.0f, 1.0f, 1.0f);
-			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-			glm::mat4 uProj = glm::perspective(glm::radians(60.0f), (float)SCREEN_WIDTH / SCREEN_HEIGHT, 0.1f, 100.0f);
-			dirtTexture.Bind(GL_TEXTURE0);
-			textureShader.Bind();
-			textureShader.SetUniformMat4("u_Proj", camera.GetProjectionMatrix());
-			textureShader.SetUniformMat4("u_View", camera.GetViewMatrix());
-
-			chunk1.Draw(textureShader);
-			
-
-			/* Swap front and back buffers */
-			glfwSwapBuffers(m_Window);
-		}
-	}
-
-	void Window::Update()
-	{
-	}
-
-	void Window::Draw()
+	Window::~Window()
 	{
 	}
 
@@ -156,6 +83,26 @@ namespace MyCraft {
 	{
 		glfwDestroyWindow(m_Window);
 		glfwTerminate();
+	}
+
+	bool Window::ShouldClose() const
+	{
+		return glfwWindowShouldClose(m_Window);
+	}
+
+	void Window::PollEvents()
+	{
+		glfwPollEvents();
+	}
+
+	void Window::SwapBuffers()
+	{
+		glfwSwapBuffers(m_Window);
+	}
+
+	void Window::CloseWindow()
+	{
+		glfwSetWindowShouldClose(m_Window, GLFW_TRUE);
 	}
 
 }

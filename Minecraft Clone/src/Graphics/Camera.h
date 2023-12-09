@@ -9,14 +9,16 @@ public:
 	Camera();
 	~Camera();
 
-	void UpdateViewMatrix();
 
 	void ProcessMouseEvent(GLFWwindow* window);
-	void ProcessKeyboardEvents(GLFWwindow* window, float deltaTime);
+	void ProcessKeyboardEvents(GLFWwindow* window);
+	void Update();
 
 	inline glm::mat4 GetViewMatrix() const { return m_ViewMatrix; }
 	inline glm::mat4 GetProjectionMatrix() const { return m_ProjectionMatrix; }
 private:
+	float m_CameraSpeed = 0.09f; // TODO: Compensate for delta time
+
 	float m_Roll;  // Rotation around view direction axis
 	float m_Pitch; // Rotation around camera's left direction axis (for moving the camera up or down)
 	float m_Yaw;   // Rotation around camera's up direcion axis (for moving the camera left or right)
@@ -29,5 +31,7 @@ private:
 
 	glm::mat4 m_ViewMatrix;
 	glm::mat4 m_ProjectionMatrix;
+private:
+	void UpdateViewMatrix();
 };
 

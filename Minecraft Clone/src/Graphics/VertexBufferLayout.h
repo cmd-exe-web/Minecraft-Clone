@@ -4,8 +4,6 @@
 
 #include <vector>
 
-#include "Vertex.h"
-
 struct VertexAttribute {
 	unsigned int count;
 	unsigned int type;

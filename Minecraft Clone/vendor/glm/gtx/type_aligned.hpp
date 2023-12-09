@@ -264,7 +264,7 @@ namespace glm
 
 	/// Default qualifier 8 bit signed integer aligned vector of 3 components type.
 	/// @see gtx_type_aligned
-	GLM_ALIGNED_TYPEDEF(i8vec3, aligned_i8vec3, 4);
+	GLM_ALIGNED_TYPEDEF(i32vec3, aligned_i8vec3, 4);
 
 	/// Default qualifier 8 bit signed integer aligned vector of 4 components type.
 	/// @see gtx_type_aligned

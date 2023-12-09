@@ -1,12 +1,9 @@
-#include "Core/Window.h"
+#include "Core/Application.h"
 
 int main(void)
 {
-    MyCraft::Window window;
-
-    window.Init();
-    window.Run();
-    window.ShutDown();
+    MyCraft::Application app;
+	app.Run();
 
 	return 0;
 }

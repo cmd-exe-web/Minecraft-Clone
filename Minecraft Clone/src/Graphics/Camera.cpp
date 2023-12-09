@@ -24,7 +24,7 @@ void Camera::UpdateViewMatrix()
 {
 	glm::vec3 cameraLeft = glm::normalize(glm::cross(m_UP, m_ViewDirection));
 	glm::mat4 rotator = glm::rotate(glm::radians(m_Yaw), m_UP) *
-						glm::rotate(glm::radians(m_Pitch), cameraLeft);
+		glm::rotate(glm::radians(m_Pitch), cameraLeft);
 
 	m_ViewDirection = glm::normalize(glm::mat3(rotator) * m_ViewDirection);
 	m_ViewMatrix = glm::lookAt(m_Position, m_Position + m_ViewDirection, m_UP);
@@ -45,8 +45,6 @@ void Camera::ProcessMouseEvent(GLFWwindow* window)
 
 		float dx = xPos - m_LastMousePosition.x;
 		float dy = yPos - m_LastMousePosition.y;
-
-		std::cout << dx << " : " << dy << std::endl;
 
 		m_LastMousePosition = { xPos, yPos };
 
@@ -71,37 +69,40 @@ void Camera::ProcessMouseEvent(GLFWwindow* window)
 		m_Yaw = 0;
 		m_FirstMouse = true;
 	}
-		UpdateViewMatrix();
 }
 
-void Camera::ProcessKeyboardEvents(GLFWwindow* window, float deltaTime)
+void Camera::ProcessKeyboardEvents(GLFWwindow* window)
 {
-	const float cameraSpeed = 0.05f; // TODO: Compensate for delta time
-	
+
 	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
-		std::cout << "W Pressed" << std::endl;
-		m_Position += cameraSpeed * m_ViewDirection;
+		m_Position += m_CameraSpeed * m_ViewDirection;
 	}
 	if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) {
-		std::cout << "A Pressed" << std::endl;
 		glm::vec3 leftDirection = glm::normalize(glm::cross(m_UP, m_ViewDirection));
-		m_Position += cameraSpeed * leftDirection;
+		m_Position += m_CameraSpeed * leftDirection;
 	}
 	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) {
-		std::cout << "S Pressed" << std::endl;
-		m_Position += -cameraSpeed * m_ViewDirection;
+		m_Position += -m_CameraSpeed * m_ViewDirection;
 	}
 	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) {
-		std::cout << "D Pressed" << std::endl;
 		glm::vec3 rightDirection = -glm::normalize(glm::cross(m_UP, m_ViewDirection));
-		m_Position += cameraSpeed * rightDirection;
+		m_Position += m_CameraSpeed * rightDirection;
 	}
 	if (glfwGetKey(window, GLFW_KEY_R) == GLFW_PRESS) {
-		m_Position += cameraSpeed * m_UP;
+		m_Position += m_CameraSpeed * m_UP;
 	}
 	if (glfwGetKey(window, GLFW_KEY_F) == GLFW_PRESS) {
-		m_Position += -cameraSpeed * m_UP;
+		m_Position += -m_CameraSpeed * m_UP;
 	}
+	if (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS){
+		m_CameraSpeed = 0.25f;
+	}
+	if (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_RELEASE){
+		m_CameraSpeed = 0.09f;
+	}
+}
 
+void Camera::Update()
+{
 	UpdateViewMatrix();
 }
