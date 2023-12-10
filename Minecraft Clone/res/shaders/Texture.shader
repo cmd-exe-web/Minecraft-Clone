@@ -6,12 +6,11 @@ layout(location = 1) in vec2 texCoord;
 
 uniform mat4 u_Proj;
 uniform mat4 u_View;
-uniform mat4 u_Model;
 
 out vec2 v_TexCoord;
 
 void main() {
-	gl_Position = u_Proj * u_View * u_Model * position;
+	gl_Position = u_Proj * u_View * position;
 	v_TexCoord = texCoord;
 }
 
@@ -25,6 +24,6 @@ uniform sampler2D u_Tex0;
 out vec4 FragColor;
 
 void main() {
-	// FragColor = vec4(0.2f, 0.3f, 0.8f, 1.0f);
-	FragColor = texture2D(u_Tex0, v_TexCoord);
+	FragColor = vec4(v_TexCoord, 0.0f, 1.0f);
+	// FragColor = texture2D(u_Tex0, v_TexCoord);
 }

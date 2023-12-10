@@ -162,8 +162,7 @@
     <ClCompile Include="src\Core\Application.cpp" />
     <ClCompile Include="src\Graphics\Camera.cpp" />
     <ClCompile Include="src\Graphics\IndexBuffer.cpp" />
-    <ClCompile Include="src\Graphics\Mesh.cpp" />
-    <ClCompile Include="src\Graphics\Renderer.cpp" />
+    <ClCompile Include="src\Graphics\Renderer\CubeRenderer.cpp" />
     <ClCompile Include="src\Graphics\Shader.cpp" />
     <ClCompile Include="src\Core\Window.cpp" />
     <ClCompile Include="src\Core\InputManager.cpp" />
@@ -183,8 +182,7 @@
     <ClInclude Include="src\Core\Application.h" />
     <ClInclude Include="src\Graphics\Camera.h" />
     <ClInclude Include="src\Graphics\IndexBuffer.h" />
-    <ClInclude Include="src\Graphics\Mesh.h" />
-    <ClInclude Include="src\Graphics\Renderer.h" />
+    <ClInclude Include="src\Graphics\Renderer\CubeRenderer.h" />
     <ClInclude Include="src\Graphics\Shader.h" />
     <ClInclude Include="src\Graphics\Shapes\Builder\CubeBuilder.h" />
     <ClInclude Include="src\Graphics\Shapes\Cube.h" />

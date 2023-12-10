@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Graphics/Renderer.h"
 #include "Window.h"
 
 namespace MyCraft {
@@ -14,7 +13,6 @@ namespace MyCraft {
 		void Run();
 	private:
 		Window m_Window;
-		Renderer m_Renderer;
 		bool m_IsRunning = true;
 		bool m_WireFrameMode = false;
 	};

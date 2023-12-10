@@ -14,6 +14,5 @@ public:
 	~CubeBuilder();
 
 	void AddFaces(Direction direction);
-	Cube Build();
 	bool VisibleFaces[6];
 };
