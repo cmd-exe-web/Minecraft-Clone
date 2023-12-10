@@ -6,6 +6,7 @@
 #include "VertexBuffer.h"
 #include "VertexBufferLayout.h" 
 #include "IndexBuffer.h"
+#include "Shader.h"
 
 #include "Shapes/Cube.h"
 
@@ -15,7 +16,7 @@ public:
 	Mesh(Cube& cube);
 	~Mesh();
 
-	void Render();
+	void Render(Shader& shader, glm::vec3 position);
 private:
 	VertexArray* m_VAO;
 	VertexBuffer* m_VBO;

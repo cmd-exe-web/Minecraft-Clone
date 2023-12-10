@@ -15,6 +15,7 @@ Shader::Shader(std::string filePath)
 
 Shader::~Shader()
 {
+	glDeleteProgram(m_Id);
 }
 
 void Shader::Bind()

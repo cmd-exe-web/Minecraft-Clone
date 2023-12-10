@@ -108,3 +108,8 @@ Cube::Cube(CubeBuilder& cubeBuilder)
 Cube::~Cube()
 {
 }
+
+void Cube::CleanUp()
+{
+	delete[] m_Indices;
+}

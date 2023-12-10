@@ -30,6 +30,8 @@ public:
 	Cube(CubeBuilder& cubeBuilder);
 	~Cube();
 
+	void CleanUp();
+
 	inline Vertex* GetVertices() { return m_Vertices; }
 	inline unsigned int* GetIndices() { return m_Indices; }
 	inline unsigned int GetBufferSize() { return m_BufferSize; }

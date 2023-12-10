@@ -1,6 +1,7 @@
 #include "Mesh.h"
 
 #include "VertexBufferLayout.h"
+#include "glm/gtc/matrix_transform.hpp"
 
 Mesh::Mesh(Cube& cube)
 	:cube(cube)
@@ -24,10 +25,14 @@ Mesh::~Mesh()
 {
 }
 
-void Mesh::Render()
+void Mesh::Render(Shader& shader, glm::vec3 position)
 {
 	m_VAO->Bind();
 	m_IBO->Bind();
+	shader.Bind();
+	shader.SetUniformMat4("u_Model", glm::translate(glm::mat4(1.0f), position));
 	glDrawElements(GL_TRIANGLES, cube.GetIndexCount(), GL_UNSIGNED_INT, 0);
 	m_VAO->Unbind();
+	shader.Unbind();
+	m_IBO->Unbind();
 }

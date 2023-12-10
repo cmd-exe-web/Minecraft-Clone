@@ -14,6 +14,7 @@
 #include "Graphics/VertexBuffer.h"
 #include "Graphics/VertexBufferLayout.h" 
 #include "Graphics/IndexBuffer.h"
+#include "Scene/Chunk.h"
 
 namespace MyCraft {
 
@@ -41,16 +42,8 @@ namespace MyCraft {
 		shader.SetUniformMat4("u_Proj", camera.GetProjectionMatrix());
 		shader.Unbind();
 
-		CubeBuilder cubeBuilder;
-		cubeBuilder.AddFaces(Direction::Front);
-		cubeBuilder.AddFaces(Direction::Back);
-		cubeBuilder.AddFaces(Direction::Left);
-		cubeBuilder.AddFaces(Direction::Right);
-		cubeBuilder.AddFaces(Direction::Top);
-		cubeBuilder.AddFaces(Direction::Bottom);
-		Cube cube(cubeBuilder);
-
-		Mesh cubeMesh(cube);
+		Chunk chunk;
+		chunk.Init();
 
 		GLFWwindow* window = m_Window.GetHandle();
 
@@ -87,7 +80,7 @@ namespace MyCraft {
 			shader.SetUniformMat4("u_Model", glm::mat4(1.0f));
 
 			m_Renderer.Clear();
-			cubeMesh.Render();
+			chunk.Render(shader);
 					
 			/* Swap front and back buffers */
 			m_Window.SwapBuffers();
