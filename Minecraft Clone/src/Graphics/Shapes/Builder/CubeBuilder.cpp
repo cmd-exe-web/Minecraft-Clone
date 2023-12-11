@@ -16,7 +16,3 @@ void CubeBuilder::AddFaces(Direction direction)
 	VisibleFaces[(int)direction] = true;
 }
 
-Cube CubeBuilder::Build()
-{
-	return Cube(*this);
-}

@@ -37,7 +37,67 @@
 // 1  ->  22
 // 0  ->  23
 
-Cube::Cube(CubeBuilder& cubeBuilder)
+void Cube::GenerateVertices(Vertex*& vertices, glm::vec3 position)
+{
+	int vertexOffset = 0;
+	*vertices = { { position.x + -0.5f, position.y + -0.5f, position.z +  0.5f }, { 0.0f, 0.0f } };		// 0   
+	vertices++;
+	*vertices = { { position.x +  0.5f, position.y + -0.5f, position.z +  0.5f }, { 1.0f, 0.0f } };		// 1
+	vertices++;
+	*vertices = { { position.x +  0.5f, position.y +  0.5f, position.z +  0.5f }, { 1.0f, 1.0f } };		// 2
+	vertices++;
+	*vertices = { { position.x + -0.5f, position.y +  0.5f, position.z +  0.5f }, { 0.0f, 1.0f } };		// 3       
+	vertices++;
+
+	*vertices = { { position.x + -0.5f, position.y + -0.5f, position.z + -0.5f }, { 0.0f, 0.0f } };		// 4
+	vertices++;
+	*vertices = { { position.x +  0.5f, position.y + -0.5f, position.z + -0.5f }, { 1.0f, 0.0f } };		// 5
+	vertices++;
+	*vertices = { { position.x +  0.5f, position.y +  0.5f, position.z + -0.5f }, { 1.0f, 1.0f } };		// 6
+	vertices++;
+	*vertices = { { position.x + -0.5f, position.y +  0.5f, position.z + -0.5f }, { 0.0f, 1.0f } };		// 7
+	vertices++;
+
+	*vertices = { { position.x + -0.5f, position.y + -0.5f, position.z + -0.5f }, { 0.0f, 0.0f } };		// 4  ->  8           
+	vertices++;
+	*vertices = { { position.x + -0.5f, position.y + -0.5f, position.z +  0.5f }, { 1.0f, 0.0f } };		// 0  ->  9  
+	vertices++;
+	*vertices = { { position.x + -0.5f, position.y +  0.5f, position.z +  0.5f }, { 1.0f, 1.0f } };		// 3  ->  10      
+	vertices++;
+	*vertices = { { position.x + -0.5f, position.y +  0.5f, position.z + -0.5f }, { 0.0f, 1.0f } };		// 7  ->  11
+	vertices++;
+
+	*vertices = { { position.x +  0.5f, position.y + -0.5f, position.z +  0.5f }, { 0.0f, 0.0f } };		// 1  ->  12
+	vertices++;
+	*vertices = { { position.x +  0.5f, position.y + -0.5f, position.z + -0.5f }, { 1.0f, 0.0f } };		// 5  ->  13
+	vertices++;
+	*vertices = { { position.x +  0.5f, position.y +  0.5f, position.z + -0.5f }, { 1.0f, 1.0f } };		// 6  ->  14
+	vertices++;
+	*vertices = { { position.x +  0.5f, position.y +  0.5f, position.z +  0.5f }, { 0.0f, 1.0f } };		// 2  ->  15
+	vertices++;
+
+	*vertices = { { position.x + -0.5f, position.y +  0.5f, position.z +  0.5f }, { 0.0f, 0.0f } };		// 3  ->  16      
+	vertices++;
+	*vertices = { { position.x +  0.5f, position.y +  0.5f, position.z +  0.5f }, { 1.0f, 0.0f } };		// 2  ->  17
+	vertices++;
+	*vertices = { { position.x +  0.5f, position.y +  0.5f, position.z + -0.5f }, { 1.0f, 1.0f } };		// 6  ->  18
+	vertices++;
+	*vertices = { { position.x + -0.5f, position.y +  0.5f, position.z + -0.5f }, { 0.0f, 1.0f } };		// 7  ->  19
+	vertices++;
+
+	*vertices = { { position.x + -0.5f, position.y + -0.5f, position.z + -0.5f }, { 0.0f, 0.0f } };		// 4  ->  20
+	vertices++;
+	*vertices = { { position.x +  0.5f, position.y + -0.5f, position.z + -0.5f }, { 1.0f, 0.0f } };		// 5  ->  21
+	vertices++;
+	*vertices = { { position.x +  0.5f, position.y + -0.5f, position.z +  0.5f }, { 1.0f, 1.0f } };		// 1  ->  22
+	vertices++;
+	*vertices = { { position.x + -0.5f, position.y + -0.5f, position.z +  0.5f }, { 0.0f, 1.0f } };		// 0  ->  23  
+	vertices++;
+
+
+}
+
+uint32_t Cube::GenerateIndices(uint32_t*& indices, CubeBuilder& cubeBuilder, uint32_t vertexCount)
 {
 	unsigned short numFaces = 0;
 	for (int i = 0; i < 6; i++) {
@@ -46,62 +106,62 @@ Cube::Cube(CubeBuilder& cubeBuilder)
 	}
 
 	unsigned int numIndices = numFaces * 6;
-	m_Indices = new unsigned int[numIndices];
 
 	int offset = 0;
 	if (cubeBuilder.VisibleFaces[(int)Direction::Front]) {
-		m_Indices[offset++] = 0;
-		m_Indices[offset++] = 1;
-		m_Indices[offset++] = 2;
-		m_Indices[offset++] = 2;
-		m_Indices[offset++] = 3;
-		m_Indices[offset++] = 0;
+		indices[offset++] = vertexCount + 0;
+		indices[offset++] = vertexCount + 1;
+		indices[offset++] = vertexCount + 2;
+		indices[offset++] = vertexCount + 2;
+		indices[offset++] = vertexCount + 3;
+		indices[offset++] = vertexCount + 0;
 	}
 	if (cubeBuilder.VisibleFaces[(int)Direction::Back]) {
-		m_Indices[offset++] = 5;
-		m_Indices[offset++] = 4;
-		m_Indices[offset++] = 7;
-		m_Indices[offset++] = 7;
-		m_Indices[offset++] = 6;
-		m_Indices[offset++] = 5;
+		indices[offset++] = vertexCount + 5;
+		indices[offset++] = vertexCount + 4;
+		indices[offset++] = vertexCount + 7;
+		indices[offset++] = vertexCount + 7;
+		indices[offset++] = vertexCount + 6;
+		indices[offset++] = vertexCount + 5;
 	}																	 
 	if (cubeBuilder.VisibleFaces[(int)Direction::Left]) {                
-		m_Indices[offset++] = 8;                                         
-		m_Indices[offset++] = 9;                                         
-		m_Indices[offset++] = 10;                                         
-		m_Indices[offset++] = 10;                                         
-		m_Indices[offset++] = 11;                                         
-		m_Indices[offset++] = 8;                                         
+		indices[offset++] = vertexCount + 8;                                         
+		indices[offset++] = vertexCount + 9;                                         
+		indices[offset++] = vertexCount + 10;                                         
+		indices[offset++] = vertexCount + 10;                                         
+		indices[offset++] = vertexCount + 11;                                         
+		indices[offset++] = vertexCount + 8;                                         
 	}                                                                    
 	if (cubeBuilder.VisibleFaces[(int)Direction::Right]) {               
-		m_Indices[offset++] = 12;                                         
-		m_Indices[offset++] = 13;                                         
-		m_Indices[offset++] = 14;                                         
-		m_Indices[offset++] = 14;                                         
-		m_Indices[offset++] = 15;                                         
-		m_Indices[offset++] = 12;                                         
+		indices[offset++] = vertexCount + 12;                                         
+		indices[offset++] = vertexCount + 13;                                         
+		indices[offset++] = vertexCount + 14;                                         
+		indices[offset++] = vertexCount + 14;                                         
+		indices[offset++] = vertexCount + 15;                                         
+		indices[offset++] = vertexCount + 12;                                         
 	}                                                                    
 	if (cubeBuilder.VisibleFaces[(int)Direction::Top]) {                 
-		m_Indices[offset++] = 16;                                         
-		m_Indices[offset++] = 17;                                         
-		m_Indices[offset++] = 18;
-		m_Indices[offset++] = 18;
-		m_Indices[offset++] = 19;
-		m_Indices[offset++] = 16;
+		indices[offset++] = vertexCount + 16;                                         
+		indices[offset++] = vertexCount + 17;                                         
+		indices[offset++] = vertexCount + 18;
+		indices[offset++] = vertexCount + 18;
+		indices[offset++] = vertexCount + 19;
+		indices[offset++] = vertexCount + 16;
 	}
 	if (cubeBuilder.VisibleFaces[(int)Direction::Bottom]) {
-		m_Indices[offset++] = 20;
-		m_Indices[offset++] = 21;
-		m_Indices[offset++] = 22;
-		m_Indices[offset++] = 22;
-		m_Indices[offset++] = 23;
-		m_Indices[offset++] = 20;
+		indices[offset++] = vertexCount + 20;
+		indices[offset++] = vertexCount + 21;
+		indices[offset++] = vertexCount + 22;
+		indices[offset++] = vertexCount + 22;
+		indices[offset++] = vertexCount + 23;
+		indices[offset++] = vertexCount + 20;
 	}
 
+	// Advancing the offset pointer to the correction position 
+	indices += numIndices;
 
 	assert(offset == numIndices);
-	m_IndexCount = numIndices;
-	m_BufferSize = sizeof(m_Vertices);
+	return numIndices;
 }
 
 
@@ -109,7 +169,3 @@ Cube::~Cube()
 {
 }
 
-void Cube::CleanUp()
-{
-	delete[] m_Indices;
-}

@@ -23,6 +23,19 @@ void VertexArray::Unbind() const
 	glBindVertexArray(0);
 }
 
+void VertexArray::AddLayout(const VertexBufferLayout& layout) const
+{
+	const std::vector<VertexAttribute> layoutElements = layout.GetElements();
+
+	int offset = 0;
+	for (int i = 0; i < layoutElements.size() ; i++) {
+		const auto& element = layoutElements[i];
+		glEnableVertexAttribArray(i);
+		glVertexAttribPointer(i, element.count, element.type, element.normalized, layout.GetStride(), (const void*)offset);
+		offset += element.count * element.GetSizeOfType();
+	}
+}
+
 void VertexArray::AddBuffers(const VertexBuffer& vb, const VertexBufferLayout& layout) 
 {
 	Bind();

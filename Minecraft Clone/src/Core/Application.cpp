@@ -2,6 +2,8 @@
 
 #include <GLFW/glfw3.h>
 
+#include <iostream>
+
 #include "InputManager.h"
 #include "Graphics/Shader.h"
 #include "Graphics/Camera.h"
@@ -14,6 +16,7 @@
 #include "Graphics/VertexBuffer.h"
 #include "Graphics/VertexBufferLayout.h" 
 #include "Graphics/IndexBuffer.h"
+#include "Graphics/Renderer/CubeRenderer.h"
 #include "Scene/Chunk.h"
 
 namespace MyCraft {
@@ -22,6 +25,7 @@ namespace MyCraft {
 		:m_Window()
 	{
 		InputManager::Init(m_Window.GetHandle());
+		CubeRenderer::Init();
 	}
 
 	Application::~Application()
@@ -38,18 +42,18 @@ namespace MyCraft {
 		texture.Bind(GL_TEXTURE0);
 
 		shader.Bind();
-		shader.SetUniform1i("u_Tex0", 0);
 		shader.SetUniformMat4("u_Proj", camera.GetProjectionMatrix());
+		shader.SetUniform1i("u_Tex0", 0);
 		shader.Unbind();
 
-		Chunk chunk;
-		chunk.Init();
-
 		GLFWwindow* window = m_Window.GetHandle();
+
+		Chunk chunk;
 
 		double lastTime = glfwGetTime();
 		int frameCount = 0;
 		double currentTime = 0;
+		glClearColor(0.0f, 1.0f, 1.0f, 1.0f);
 
 		/* Loop until the user closes the window */
 		while (!m_Window.ShouldClose()) {
@@ -62,6 +66,7 @@ namespace MyCraft {
 				frameCount = 0;
 				lastTime += 1.0;
 			}
+			CubeRenderer::ResetStats();
 			m_Window.PollEvents();
 			camera.ProcessKeyboardEvents(window);
 			camera.ProcessMouseEvent(window);
@@ -73,17 +78,34 @@ namespace MyCraft {
 				m_WireFrameMode = !m_WireFrameMode;
 				glPolygonMode(GL_FRONT_AND_BACK, m_WireFrameMode ? GL_LINE : GL_FILL);
 			}
+			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+			CubeRenderer::BeginBatch();
+
 			camera.Update();
+			chunk.Update();
+
+			// CubeBuilder cubeBuilder;
+			// cubeBuilder.AddFaces(Direction::Front);
+			// cubeBuilder.AddFaces(Direction::Back);
+			// cubeBuilder.AddFaces(Direction::Left);
+			// cubeBuilder.AddFaces(Direction::Right);
+			// cubeBuilder.AddFaces(Direction::Top);
+			// cubeBuilder.AddFaces(Direction::Bottom);
+
+			// CubeRenderer::AddCube(cubeBuilder, { 0.0f, 0.0f, 0.0f });
+			// CubeRenderer::AddCube(cubeBuilder, { 1.0f, 0.0f, 0.0f });
+
+			CubeRenderer::EndBatch();
 
 			shader.Bind();
 			shader.SetUniformMat4("u_View", camera.GetViewMatrix());
-			shader.SetUniformMat4("u_Model", glm::mat4(1.0f));
 
-			m_Renderer.Clear();
-			chunk.Render(shader);
-					
+			CubeRenderer::Flush();
+
 			/* Swap front and back buffers */
 			m_Window.SwapBuffers();
+			std::cout << "Cube Count: " << CubeRenderer::GetStats().CubeCount << " : " << "Draw Calls: " << CubeRenderer::GetStats().DrawCount << std::endl;
 		}
 	}
 

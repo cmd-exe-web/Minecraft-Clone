@@ -10,6 +10,7 @@ public:
 
 	void Bind() const;
 	void Unbind() const;
+	void AddLayout(const VertexBufferLayout& layout) const;
 	void AddBuffers(const VertexBuffer& vb, const VertexBufferLayout& layout);
 
 private:
