@@ -7,7 +7,7 @@
 #include "Graphics/IndexBuffer.h"
 
 const int MAX_CUBE_COUNT = 1000;
-const int MAX_QUAD_COUNT = 1000 * 6;
+const int MAX_QUAD_COUNT = MAX_CUBE_COUNT * 6;
 const int MAX_VERTEX_COUNT = MAX_QUAD_COUNT * 4;
 const int MAX_INDEX_COUNT = MAX_QUAD_COUNT * 6;
 
@@ -67,7 +67,7 @@ void CubeRenderer::BeginBatch()
 
 void CubeRenderer::EndBatch()
 {
-	s_Data.CubeVBO->UploadData(s_Data.QuadBuffer, (char*)s_Data.QuadOffsetPtr - (char*)s_Data.QuadBuffer);
+	s_Data.CubeVBO->UploadData(s_Data.QuadBuffer, s_Data.VertexCount * sizeof(Vertex));
 	s_Data.CubeIBO->UploadData(s_Data.QuadIndexBuffer, s_Data.IndexCount);
 
 }
@@ -93,8 +93,8 @@ void CubeRenderer::ResetStats()
 
 void CubeRenderer::AddCube(CubeBuilder cubeBuilder, glm::vec3 position)
 {
-	if ((char*)s_Data.QuadOffsetPtr - (char*)s_Data.QuadBuffer + sizeof(Vertex) >= MAX_VERTEX_COUNT * sizeof(Vertex) ||
-		(char*)s_Data.QuadIndexOffsetPtr - (char*)s_Data.QuadIndexBuffer + sizeof(unsigned int) >= MAX_INDEX_COUNT * sizeof(unsigned int))
+	if( s_Data.VertexCount + 24 >= MAX_VERTEX_COUNT ||
+		s_Data.IndexCount + 36 >= MAX_INDEX_COUNT)
 	{
 		EndBatch();
 		Flush();

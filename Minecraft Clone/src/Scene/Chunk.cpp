@@ -29,14 +29,6 @@ Chunk::Chunk()
 
 Chunk::~Chunk()
 {
-	for (int i = 0; i < m_ChunkSize.x; i++) {
-		for (int j = 0; j < m_ChunkSize.y; j++) {
-			for (int k = 0; k < m_ChunkSize.z; k++) {
-				// if (IsPresent({i, j, k}) && IsVisible({i, j, k}))
-					// m_Blocks[i][j][k]->CleanUp();
-			}
-		}
-	}
 }
 
 void Chunk::Update()
@@ -82,8 +74,4 @@ bool Chunk::IsPresent(glm::i32vec3 position)
 	if (position.x < 0 || position.y < 0 || position.z < 0 || position.x == m_ChunkSize.x || position.y == m_ChunkSize.y || position.z == m_ChunkSize.z)
 		return false;
 	return m_BlockPresent[position.x][position.y][position.z];
-}
-
-void Chunk::Render(Shader& shader)
-{
 }

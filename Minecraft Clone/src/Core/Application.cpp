@@ -43,9 +43,12 @@ namespace MyCraft {
 
 		shader.Bind();
 		shader.SetUniformMat4("u_Proj", camera.GetProjectionMatrix());
+		shader.SetUniform1i("u_Tex0", 0);
 		shader.Unbind();
 
 		GLFWwindow* window = m_Window.GetHandle();
+
+		Chunk chunk;
 
 		double lastTime = glfwGetTime();
 		int frameCount = 0;
@@ -75,26 +78,29 @@ namespace MyCraft {
 				m_WireFrameMode = !m_WireFrameMode;
 				glPolygonMode(GL_FRONT_AND_BACK, m_WireFrameMode ? GL_LINE : GL_FILL);
 			}
-			camera.Update();
+			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
 			CubeRenderer::BeginBatch();
 
-			CubeBuilder cubeBuilder;
-			cubeBuilder.AddFaces(Direction::Front);
-			cubeBuilder.AddFaces(Direction::Back);
-			cubeBuilder.AddFaces(Direction::Left);
-			cubeBuilder.AddFaces(Direction::Right);
-			cubeBuilder.AddFaces(Direction::Top);
-			cubeBuilder.AddFaces(Direction::Bottom);
+			camera.Update();
+			chunk.Update();
 
-			CubeRenderer::AddCube(cubeBuilder, { 0.0f, 0.0f, 0.0f });
-			CubeRenderer::AddCube(cubeBuilder, { 1.0f, 0.0f, 0.0f });
+			// CubeBuilder cubeBuilder;
+			// cubeBuilder.AddFaces(Direction::Front);
+			// cubeBuilder.AddFaces(Direction::Back);
+			// cubeBuilder.AddFaces(Direction::Left);
+			// cubeBuilder.AddFaces(Direction::Right);
+			// cubeBuilder.AddFaces(Direction::Top);
+			// cubeBuilder.AddFaces(Direction::Bottom);
+
+			// CubeRenderer::AddCube(cubeBuilder, { 0.0f, 0.0f, 0.0f });
+			// CubeRenderer::AddCube(cubeBuilder, { 1.0f, 0.0f, 0.0f });
 
 			CubeRenderer::EndBatch();
 
 			shader.Bind();
 			shader.SetUniformMat4("u_View", camera.GetViewMatrix());
 
-			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 			CubeRenderer::Flush();
 
 			/* Swap front and back buffers */

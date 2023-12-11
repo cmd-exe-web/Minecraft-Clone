@@ -16,8 +16,6 @@ public:
 	void Update();
 	bool IsVisible(glm::i32vec3 position);
 	bool IsPresent(glm::i32vec3 position);
-
-	void Render(Shader& shader);
 private:
 	bool m_BlockPresent[CHUNK_SIZE_X][CHUNK_SIZE_Y][CHUNK_SIZE_Z];
 	glm::i32vec3 m_ChunkSize;
