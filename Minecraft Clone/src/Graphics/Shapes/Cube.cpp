@@ -2,6 +2,8 @@
 
 #include <cassert>
 
+#include "AssetManager/ConfigurationManager.h"
+
 /*
 
 			7- - - - - - - -6
@@ -37,9 +39,9 @@
 // 1  ->  22
 // 0  ->  23
 
-void Cube::GenerateVertices(Vertex*& vertices, glm::vec3 position)
+void Cube::GenerateVertices(Vertex*& vertices, glm::vec3 position, const CubeBuilder& cubeBuilder)
 {
-	int vertexOffset = 0;
+	auto textureAtlas = cubeBuilder.Name;
 	*vertices = { { position.x + -0.5f, position.y + -0.5f, position.z +  0.5f }, { 0.0f, 0.0f } };		// 0   
 	vertices++;
 	*vertices = { { position.x +  0.5f, position.y + -0.5f, position.z +  0.5f }, { 1.0f, 0.0f } };		// 1

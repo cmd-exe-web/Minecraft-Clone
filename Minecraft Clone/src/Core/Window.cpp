@@ -2,12 +2,7 @@
 
 #include <iostream>
 
-#include "glm/gtc/matrix_transform.hpp"
-
 #include "Constants.h"
-#include "InputManager.h"
-#include "Graphics/Shader.h"
-#include "Graphics/Texture.h"
 
 namespace MyCraft {
 
@@ -40,8 +35,6 @@ namespace MyCraft {
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
 		glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-
-
 		const int SCREEN_WIDTH = 1280;
 		const int SCREEN_HEIGHT = 720;
 
@@ -63,13 +56,20 @@ namespace MyCraft {
 			exit(-1);
 		}
 
+
+		std::cout << "GL Info:\n";
+		std::cout << "VENDOR: " << glGetString(GL_VENDOR) << std::endl;
+		std::cout << "RENDERER: " << glGetString(GL_RENDERER) << std::endl;
+		std::cout << "VERSION: " << glGetString(GL_VERSION) << std::endl;
+
+
 		int flags;
 		glGetIntegerv(GL_CONTEXT_FLAGS, &flags);
 
 		glEnable              ( GL_DEBUG_OUTPUT );
 		glDebugMessageCallback(MessageCallback, 0);
 
-
+		glfwSwapInterval(0);
 		// glEnable(GL_CULL_FACE);
 		glEnable(GL_DEPTH_TEST);
 		glViewport(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);

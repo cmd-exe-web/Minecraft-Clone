@@ -16,3 +16,8 @@ void CubeBuilder::AddFaces(Direction direction)
 	VisibleFaces[(int)direction] = true;
 }
 
+void CubeBuilder::AddBlockType(BlockName name)
+{
+	Name = name;
+}
+

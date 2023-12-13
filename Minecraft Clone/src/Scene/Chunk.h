@@ -4,7 +4,6 @@
 
 #include "Constants.h"
 #include "Graphics/Shapes/Cube.h"
-#include "Graphics/Mesh.h"
 #include "Graphics/Shader.h"
 
 class Chunk

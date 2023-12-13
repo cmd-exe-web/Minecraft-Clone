@@ -1,0 +1,44 @@
+{
+  "textures": {
+    "dirt": {
+      "side": {
+        "left": 0,
+        "right": 0.25,
+        "top": 0,
+        "bottom": 0.25
+      },
+      "top": {
+        "left": 0.25,
+        "right": 0.50,
+        "top": 0,
+        "bottom": 0.25
+      },
+      "base": {
+        "left": 0.50,
+        "right": 0.75,
+        "top": 0,
+        "bottom": 0.25
+      }
+    },
+    "cobblestone": {
+      "side": {
+        "left": 0.75,
+        "right": 1.00,
+        "top": 0.00,
+        "bottom": 0.25
+      },
+      "top": {
+        "left": 0.75,
+        "right": 1.00,
+        "top": 0.00,
+        "bottom": 0.25
+      },
+      "base": {
+        "left": 0.75,
+        "right": 1.00,
+        "top": 0.00,
+        "bottom": 0.25
+      }
+    }
+  }
+}

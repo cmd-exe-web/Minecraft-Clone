@@ -27,8 +27,8 @@ struct Vertex
 class Cube
 {
 public:
-	static void GenerateVertices(Vertex*& vertices, glm::vec3 position);
-	static uint32_t GenerateIndices(unsigned int*& indices, CubeBuilder& cubeBuilde, uint32_t vertexCount);
+	static void GenerateVertices(Vertex*& vertices, glm::vec3 position, const CubeBuilder& cubeBuilder);
+	static uint32_t GenerateIndices(uint32_t*& indices, CubeBuilder& cubeBuilde, uint32_t vertexCount);
 	~Cube();
 
 //	void CleanUp();

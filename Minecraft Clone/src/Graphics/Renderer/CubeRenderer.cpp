@@ -100,7 +100,7 @@ void CubeRenderer::AddCube(CubeBuilder cubeBuilder, glm::vec3 position)
 		Flush();
 		BeginBatch();
 	}
-	Cube::GenerateVertices(s_Data.QuadOffsetPtr, position);
+	Cube::GenerateVertices(s_Data.QuadOffsetPtr, position, cubeBuilder);
 	s_Data.IndexCount += Cube::GenerateIndices(s_Data.QuadIndexOffsetPtr, cubeBuilder, s_Data.VertexCount);
 	s_Data.VertexCount += 4 * 6;
 	s_Data.RenderStats.CubeCount++;

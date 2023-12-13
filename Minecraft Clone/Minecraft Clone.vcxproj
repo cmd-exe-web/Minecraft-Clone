@@ -159,6 +159,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\AssetManager\ConfigurationManager.cpp" />
     <ClCompile Include="src\Core\Application.cpp" />
     <ClCompile Include="src\Graphics\Camera.cpp" />
     <ClCompile Include="src\Graphics\IndexBuffer.cpp" />
@@ -179,6 +180,8 @@
     <ClCompile Include="vendor\stb_image\stb_image.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\AssetManager\BlockType.h" />
+    <ClInclude Include="src\AssetManager\ConfigurationManager.h" />
     <ClInclude Include="src\Core\Application.h" />
     <ClInclude Include="src\Graphics\Camera.h" />
     <ClInclude Include="src\Graphics\IndexBuffer.h" />
@@ -478,11 +481,14 @@
     <ClInclude Include="vendor\glm\vec3.hpp" />
     <ClInclude Include="vendor\glm\vec4.hpp" />
     <ClInclude Include="vendor\glm\vector_relational.hpp" />
+    <ClInclude Include="vendor\nlohmann\json.hpp" />
     <ClInclude Include="vendor\stb_image\stb_image.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="res\shaders\Basic.shader" />
     <None Include="res\shaders\Texture.shader" />
+    <None Include="res\texture_mappings.json" />
+    <None Include="src\AssetManager\texture_mappings.json" />
     <None Include="vendor\glm\detail\func_common.inl" />
     <None Include="vendor\glm\detail\func_common_simd.inl" />
     <None Include="vendor\glm\detail\func_exponential.inl" />

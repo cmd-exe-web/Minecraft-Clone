@@ -8,14 +8,7 @@
 #include "Graphics/Shader.h"
 #include "Graphics/Camera.h"
 #include "Graphics/Texture.h"
-#include "Graphics/Shapes/Builder/CubeBuilder.h"
-#include "Graphics/Shapes/Cube.h"
-#include "Graphics/Mesh.h"
 
-#include "Graphics/VertexArray.h"
-#include "Graphics/VertexBuffer.h"
-#include "Graphics/VertexBufferLayout.h" 
-#include "Graphics/IndexBuffer.h"
 #include "Graphics/Renderer/CubeRenderer.h"
 #include "Scene/Chunk.h"
 
@@ -37,7 +30,7 @@ namespace MyCraft {
 	{
 		Shader shader("res/shaders/Texture.shader");
 		Camera camera;
-		Texture texture(GL_TEXTURE_2D, "res/textures/cobblestone.png", Format::PNG);
+		Texture texture(GL_TEXTURE_2D, "res/textures/grass_side.png", Format::PNG);
 		texture.Load();
 		texture.Bind(GL_TEXTURE0);
 
@@ -85,17 +78,6 @@ namespace MyCraft {
 			camera.Update();
 			chunk.Update();
 
-			// CubeBuilder cubeBuilder;
-			// cubeBuilder.AddFaces(Direction::Front);
-			// cubeBuilder.AddFaces(Direction::Back);
-			// cubeBuilder.AddFaces(Direction::Left);
-			// cubeBuilder.AddFaces(Direction::Right);
-			// cubeBuilder.AddFaces(Direction::Top);
-			// cubeBuilder.AddFaces(Direction::Bottom);
-
-			// CubeRenderer::AddCube(cubeBuilder, { 0.0f, 0.0f, 0.0f });
-			// CubeRenderer::AddCube(cubeBuilder, { 1.0f, 0.0f, 0.0f });
-
 			CubeRenderer::EndBatch();
 
 			shader.Bind();
@@ -105,7 +87,7 @@ namespace MyCraft {
 
 			/* Swap front and back buffers */
 			m_Window.SwapBuffers();
-			std::cout << "Cube Count: " << CubeRenderer::GetStats().CubeCount << " : " << "Draw Calls: " << CubeRenderer::GetStats().DrawCount << std::endl;
+			// std::cout << "Cube Count: " << CubeRenderer::GetStats().CubeCount << " : " << "Draw Calls: " << CubeRenderer::GetStats().DrawCount << std::endl;
 		}
 	}
 

@@ -1,13 +1,9 @@
 #pragma once
 
-#include <string>
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
 
-#include "Graphics/VertexArray.h"
-#include "Graphics/VertexBuffer.h"
-#include "Graphics/VertexBufferLayout.h"
-#include "Graphics/IndexBuffer.h"
-#include "Graphics/Shader.h"
-#include "Graphics/Camera.h"
+#include <string>
 
 namespace MyCraft {
 
