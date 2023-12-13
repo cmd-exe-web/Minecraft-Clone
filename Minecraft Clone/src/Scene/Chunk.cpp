@@ -18,9 +18,15 @@ Chunk::Chunk()
 		for (int j = 0; j < m_ChunkSize.y; j++) {
 			for (int k = 0; k < m_ChunkSize.z; k++) {
 				m_BlockPresent[i][j][k] = true;
+				m_BlockName[i][j][k] = BlockName::Dirt;
 			}
 		}
 	}
+	m_BlockName[0][0][0] = BlockName::Cobblestone;
+	m_BlockName[0][0][1] = BlockName::Cobblestone;
+	m_BlockName[0][0][2] = BlockName::Cobblestone;
+	m_BlockName[0][0][3] = BlockName::Cobblestone;
+	m_BlockName[0][1][3] = BlockName::Cobblestone;
 	m_BlockPresent[0][0][m_ChunkSize.z / 2] = false;
 	m_BlockPresent[0][4][m_ChunkSize.z / 2] = false;
 	m_BlockPresent[1][4][m_ChunkSize.z / 2] = false;
@@ -54,6 +60,7 @@ void Chunk::Update()
 				if (!IsPresent(current + neighbours[(int)Direction::Bottom]))
 					cubeBuilder.AddFaces(Direction::Bottom);
 				// m_Blocks[i][j][k] = new Cube(cubeBuilder);
+				cubeBuilder.AddBlockType(m_BlockName[i][j][k]);
 				CubeRenderer::AddCube(cubeBuilder, {i, j, k});
 			}
 		}

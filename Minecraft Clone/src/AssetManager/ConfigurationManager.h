@@ -8,14 +8,14 @@ class ConfigurationManager
 {
 public:
 	static ConfigurationManager& GetInstance();
+	void Init();
 
 	ConfigurationManager(const ConfigurationManager&) = delete;
 	void operator=(ConfigurationManager&) = delete;
 
-	TextureAtlas GetTexCoords(BlockName name);
+	TextureAtlas GetTextureAtlas(BlockName name);
 private:
 	ConfigurationManager() {
-		LoadConfiguration();
 	}
 	void LoadConfiguration();
 private:

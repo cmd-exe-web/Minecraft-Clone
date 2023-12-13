@@ -3,8 +3,7 @@
 #include "glm/glm.hpp"
 
 #include "Constants.h"
-#include "Graphics/Shapes/Cube.h"
-#include "Graphics/Shader.h"
+#include "AssetManager/BlockType.h"
 
 class Chunk
 {
@@ -18,4 +17,5 @@ public:
 private:
 	bool m_BlockPresent[CHUNK_SIZE_X][CHUNK_SIZE_Y][CHUNK_SIZE_Z];
 	glm::i32vec3 m_ChunkSize;
+	BlockName m_BlockName[CHUNK_SIZE_X][CHUNK_SIZE_Y][CHUNK_SIZE_Z];
 };

@@ -11,6 +11,7 @@
 
 #include "Graphics/Renderer/CubeRenderer.h"
 #include "Scene/Chunk.h"
+#include "AssetManager/ConfigurationManager.h"
 
 namespace MyCraft {
 
@@ -19,6 +20,7 @@ namespace MyCraft {
 	{
 		InputManager::Init(m_Window.GetHandle());
 		CubeRenderer::Init();
+		ConfigurationManager::GetInstance().Init();
 	}
 
 	Application::~Application()
@@ -30,7 +32,7 @@ namespace MyCraft {
 	{
 		Shader shader("res/shaders/Texture.shader");
 		Camera camera;
-		Texture texture(GL_TEXTURE_2D, "res/textures/grass_side.png", Format::PNG);
+		Texture texture(GL_TEXTURE_2D, "res/textures/texture-atlas.png", Format::PNG);
 		texture.Load();
 		texture.Bind(GL_TEXTURE0);
 

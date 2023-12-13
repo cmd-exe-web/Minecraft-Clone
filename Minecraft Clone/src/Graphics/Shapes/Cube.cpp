@@ -41,59 +41,59 @@
 
 void Cube::GenerateVertices(Vertex*& vertices, glm::vec3 position, const CubeBuilder& cubeBuilder)
 {
-	auto textureAtlas = cubeBuilder.Name;
-	*vertices = { { position.x + -0.5f, position.y + -0.5f, position.z +  0.5f }, { 0.0f, 0.0f } };		// 0   
+	TextureAtlas textureAtlas = ConfigurationManager::GetInstance().GetTextureAtlas(cubeBuilder.Name);
+	*vertices = { { position.x + -0.5f, position.y + -0.5f, position.z +  0.5f }, { textureAtlas.Sides.Left,  textureAtlas.Sides.Bottom } };		// 0   
 	vertices++;
-	*vertices = { { position.x +  0.5f, position.y + -0.5f, position.z +  0.5f }, { 1.0f, 0.0f } };		// 1
+	*vertices = { { position.x +  0.5f, position.y + -0.5f, position.z +  0.5f }, { textureAtlas.Sides.Right, textureAtlas.Sides.Bottom } };		// 1
 	vertices++;
-	*vertices = { { position.x +  0.5f, position.y +  0.5f, position.z +  0.5f }, { 1.0f, 1.0f } };		// 2
+	*vertices = { { position.x +  0.5f, position.y +  0.5f, position.z +  0.5f }, { textureAtlas.Sides.Right, textureAtlas.Sides.Top    } };		// 2
 	vertices++;
-	*vertices = { { position.x + -0.5f, position.y +  0.5f, position.z +  0.5f }, { 0.0f, 1.0f } };		// 3       
+	*vertices = { { position.x + -0.5f, position.y +  0.5f, position.z +  0.5f }, { textureAtlas.Sides.Left,  textureAtlas.Sides.Top    } };		// 3       Front Face
 	vertices++;
-
-	*vertices = { { position.x + -0.5f, position.y + -0.5f, position.z + -0.5f }, { 0.0f, 0.0f } };		// 4
-	vertices++;
-	*vertices = { { position.x +  0.5f, position.y + -0.5f, position.z + -0.5f }, { 1.0f, 0.0f } };		// 5
-	vertices++;
-	*vertices = { { position.x +  0.5f, position.y +  0.5f, position.z + -0.5f }, { 1.0f, 1.0f } };		// 6
-	vertices++;
-	*vertices = { { position.x + -0.5f, position.y +  0.5f, position.z + -0.5f }, { 0.0f, 1.0f } };		// 7
-	vertices++;
-
-	*vertices = { { position.x + -0.5f, position.y + -0.5f, position.z + -0.5f }, { 0.0f, 0.0f } };		// 4  ->  8           
-	vertices++;
-	*vertices = { { position.x + -0.5f, position.y + -0.5f, position.z +  0.5f }, { 1.0f, 0.0f } };		// 0  ->  9  
-	vertices++;
-	*vertices = { { position.x + -0.5f, position.y +  0.5f, position.z +  0.5f }, { 1.0f, 1.0f } };		// 3  ->  10      
-	vertices++;
-	*vertices = { { position.x + -0.5f, position.y +  0.5f, position.z + -0.5f }, { 0.0f, 1.0f } };		// 7  ->  11
+  
+	*vertices = { { position.x + -0.5f, position.y + -0.5f, position.z + -0.5f }, { textureAtlas.Sides.Right, textureAtlas.Sides.Bottom } };		// 4
+	vertices++;                                                                     
+	*vertices = { { position.x +  0.5f, position.y + -0.5f, position.z + -0.5f }, { textureAtlas.Sides.Left , textureAtlas.Sides.Bottom } };		// 5
+	vertices++;                                                                     
+	*vertices = { { position.x +  0.5f, position.y +  0.5f, position.z + -0.5f }, { textureAtlas.Sides.Left , textureAtlas.Sides.Top    } };		// 6
+	vertices++;                                                                     
+	*vertices = { { position.x + -0.5f, position.y +  0.5f, position.z + -0.5f }, { textureAtlas.Sides.Right, textureAtlas.Sides.Top    } };		// 7		Back Face
 	vertices++;
 
-	*vertices = { { position.x +  0.5f, position.y + -0.5f, position.z +  0.5f }, { 0.0f, 0.0f } };		// 1  ->  12
-	vertices++;
-	*vertices = { { position.x +  0.5f, position.y + -0.5f, position.z + -0.5f }, { 1.0f, 0.0f } };		// 5  ->  13
-	vertices++;
-	*vertices = { { position.x +  0.5f, position.y +  0.5f, position.z + -0.5f }, { 1.0f, 1.0f } };		// 6  ->  14
-	vertices++;
-	*vertices = { { position.x +  0.5f, position.y +  0.5f, position.z +  0.5f }, { 0.0f, 1.0f } };		// 2  ->  15
-	vertices++;
-
-	*vertices = { { position.x + -0.5f, position.y +  0.5f, position.z +  0.5f }, { 0.0f, 0.0f } };		// 3  ->  16      
-	vertices++;
-	*vertices = { { position.x +  0.5f, position.y +  0.5f, position.z +  0.5f }, { 1.0f, 0.0f } };		// 2  ->  17
-	vertices++;
-	*vertices = { { position.x +  0.5f, position.y +  0.5f, position.z + -0.5f }, { 1.0f, 1.0f } };		// 6  ->  18
-	vertices++;
-	*vertices = { { position.x + -0.5f, position.y +  0.5f, position.z + -0.5f }, { 0.0f, 1.0f } };		// 7  ->  19
+	*vertices = { { position.x + -0.5f, position.y + -0.5f, position.z + -0.5f }, { textureAtlas.Sides.Left , textureAtlas.Sides.Bottom } };		// 4  ->  8           
+	vertices++;                                                                     
+	*vertices = { { position.x + -0.5f, position.y + -0.5f, position.z +  0.5f }, { textureAtlas.Sides.Right, textureAtlas.Sides.Bottom } };		// 0  ->  9  
+	vertices++;                                                                     
+	*vertices = { { position.x + -0.5f, position.y +  0.5f, position.z +  0.5f }, { textureAtlas.Sides.Right, textureAtlas.Sides.Top    } };		// 3  ->  10      
+	vertices++;                                                                     
+	*vertices = { { position.x + -0.5f, position.y +  0.5f, position.z + -0.5f }, { textureAtlas.Sides.Left ,  textureAtlas.Sides.Top    } };		// 7  ->  11	Left Face
 	vertices++;
 
-	*vertices = { { position.x + -0.5f, position.y + -0.5f, position.z + -0.5f }, { 0.0f, 0.0f } };		// 4  ->  20
+	*vertices = { { position.x +  0.5f, position.y + -0.5f, position.z +  0.5f }, { textureAtlas.Sides.Left , textureAtlas.Sides.Bottom } };		// 1  ->  12
+	vertices++;                                                                     
+	*vertices = { { position.x +  0.5f, position.y + -0.5f, position.z + -0.5f }, { textureAtlas.Sides.Right, textureAtlas.Sides.Bottom } };		// 5  ->  13
+	vertices++;                                                                     
+	*vertices = { { position.x +  0.5f, position.y +  0.5f, position.z + -0.5f }, { textureAtlas.Sides.Right, textureAtlas.Sides.Top    } };		// 6  ->  14
+	vertices++;                                                                     
+	*vertices = { { position.x +  0.5f, position.y +  0.5f, position.z +  0.5f }, { textureAtlas.Sides.Left , textureAtlas.Sides.Top    } };		// 2  ->  15	Right Face
 	vertices++;
-	*vertices = { { position.x +  0.5f, position.y + -0.5f, position.z + -0.5f }, { 1.0f, 0.0f } };		// 5  ->  21
+
+	*vertices = { { position.x + -0.5f, position.y +  0.5f, position.z +  0.5f }, { textureAtlas.Top.Left   , textureAtlas.Top.Bottom   } };		// 3  ->  16      
+	vertices++;                                                                     
+	*vertices = { { position.x +  0.5f, position.y +  0.5f, position.z +  0.5f }, { textureAtlas.Top.Right  , textureAtlas.Top.Bottom   } };		// 2  ->  17
+	vertices++;                                                                     
+	*vertices = { { position.x +  0.5f, position.y +  0.5f, position.z + -0.5f }, { textureAtlas.Top.Right  , textureAtlas.Top.Top      } };		// 6  ->  18
+	vertices++;                                                                     
+	*vertices = { { position.x + -0.5f, position.y +  0.5f, position.z + -0.5f }, { textureAtlas.Top.Left   , textureAtlas.Top.Top      } };		// 7  ->  19	Top Face
 	vertices++;
-	*vertices = { { position.x +  0.5f, position.y + -0.5f, position.z +  0.5f }, { 1.0f, 1.0f } };		// 1  ->  22
-	vertices++;
-	*vertices = { { position.x + -0.5f, position.y + -0.5f, position.z +  0.5f }, { 0.0f, 1.0f } };		// 0  ->  23  
+
+	*vertices = { { position.x + -0.5f, position.y + -0.5f, position.z + -0.5f }, { textureAtlas.Base.Left  , textureAtlas.Base.Bottom  } };		// 4  ->  20
+	vertices++;                                                                     
+	*vertices = { { position.x +  0.5f, position.y + -0.5f, position.z + -0.5f }, { textureAtlas.Base.Right , textureAtlas.Base.Bottom  } };		// 5  ->  21
+	vertices++;                                                                     
+	*vertices = { { position.x +  0.5f, position.y + -0.5f, position.z +  0.5f }, { textureAtlas.Base.Right , textureAtlas.Base.Top     } };		// 1  ->  22
+	vertices++;                                                                     
+	*vertices = { { position.x + -0.5f, position.y + -0.5f, position.z +  0.5f }, { textureAtlas.Base.Left  ,  textureAtlas.Base.Top    } };		// 0  ->  23	Bottom Face
 	vertices++;
 
 

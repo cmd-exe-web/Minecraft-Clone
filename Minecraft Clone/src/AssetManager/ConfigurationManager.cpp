@@ -1,6 +1,5 @@
 #include "ConfigurationManager.h"
 
-#include <iostream>
 #include <fstream>
 
 #include "nlohmann/json.hpp"
@@ -13,10 +12,9 @@ ConfigurationManager& ConfigurationManager::GetInstance()
 	return s_Instance;
 }
 
-
-TextureAtlas ConfigurationManager::GetTexCoords(BlockName name)
+void ConfigurationManager::Init()
 {
-	return TextureAtlas();
+	LoadConfiguration();
 }
 
 std::unordered_map<BlockName, TextureAtlas> ParseJson(json data) {
@@ -35,44 +33,40 @@ std::unordered_map<BlockName, TextureAtlas> ParseJson(json data) {
 
 			auto& compositeSides = blockName.value();
 
-			std::cout << blockName.key() << "::" << std::endl;
-
 			TextureAtlas textureAtlas;
 
 			for (auto compositeSide = compositeSides.begin(); compositeSide != compositeSides.end(); compositeSide++) {
 				auto& edges = compositeSide.value();
-
-				std::cout << compositeSide.key() << ":-" << std::endl;
 
 				Face tempFace;
 				for (auto edge = edges.begin(); edge != edges.end(); edge++) {
 
 					if (edge.key() == "top")
 						tempFace.Top = edge.value();
-					if (edge.key() == "bottom")
+					else if (edge.key() == "bottom")
 						tempFace.Bottom = edge.value();
-					if (edge.key() == "left")
+					else if (edge.key() == "left")
 						tempFace.Left = edge.value();
-					if (edge.key() == "right")
+					else if (edge.key() == "right")
 						tempFace.Right = edge.value();
-
-					std::cout << edge.key() << " : " << edge.value() << std::endl;
 				}
-				std::cout << std::endl;
-
 				if (compositeSide.key() == "top")
 					textureAtlas.Top = tempFace;
-				if (compositeSide.key() == "side")
+				else if (compositeSide.key() == "side")
 					textureAtlas.Sides = tempFace;
-				if (compositeSide.key() == "base")
+				else if (compositeSide.key() == "base")
 					textureAtlas.Base = tempFace;
 			}
-
 			TextureMappings[nameOfBlock] = textureAtlas;
 		}
 	}
 
 	return TextureMappings;
+}
+
+TextureAtlas ConfigurationManager::GetTextureAtlas(BlockName name)
+{
+	return m_BlockTextureMappings[name];
 }
 
 void ConfigurationManager::LoadConfiguration()
