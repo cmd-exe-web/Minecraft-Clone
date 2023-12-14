@@ -73,17 +73,17 @@ namespace MyCraft {
 				m_WireFrameMode = !m_WireFrameMode;
 				glPolygonMode(GL_FRONT_AND_BACK, m_WireFrameMode ? GL_LINE : GL_FILL);
 			}
-			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-			CubeRenderer::BeginBatch();
-
 			camera.Update();
-			chunk.Update();
 
-			CubeRenderer::EndBatch();
+			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 			shader.Bind();
 			shader.SetUniformMat4("u_View", camera.GetViewMatrix());
+
+			CubeRenderer::BeginBatch();
+			chunk.Render();
+			CubeRenderer::EndBatch();
+
 
 			CubeRenderer::Flush();
 

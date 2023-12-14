@@ -1,6 +1,7 @@
 #include "Chunk.h"
 
 #include "Graphics/Renderer/CubeRenderer.h"
+#include "Scene/TerrainGenerator.h"
 
 glm::i32vec3 neighbours[6] = {
 	{  0,  0,  1 },
@@ -14,14 +15,23 @@ glm::i32vec3 neighbours[6] = {
 Chunk::Chunk()
 	:m_ChunkSize({CHUNK_SIZE_X, CHUNK_SIZE_Y, CHUNK_SIZE_Z})
 {
+	memset(m_BlockPresent, 0, sizeof(m_BlockPresent));
+
 	for (int i = 0; i < m_ChunkSize.x; i++) {
 		for (int j = 0; j < m_ChunkSize.y; j++) {
 			for (int k = 0; k < m_ChunkSize.z; k++) {
-				m_BlockPresent[i][j][k] = true;
+				// m_BlockPresent[i][j][k] = true;
 				m_BlockName[i][j][k] = BlockName::Dirt;
+
+				// if (j > 127) {
+					// m_BlockPresent[i][j][k] = false;
+				// }
 			}
 		}
 	}
+
+	TerrainGenerator::GenerateRandomTerrain(m_BlockPresent);
+
 	m_BlockName[0][0][0] = BlockName::Cobblestone;
 	m_BlockName[0][0][1] = BlockName::Cobblestone;
 	m_BlockName[0][0][2] = BlockName::Cobblestone;
@@ -37,7 +47,7 @@ Chunk::~Chunk()
 {
 }
 
-void Chunk::Update()
+void Chunk::Render()
 {
 	for (int i = 0; i < m_ChunkSize.x; i++) {
 		for (int j = 0; j < m_ChunkSize.y; j++) {
@@ -59,9 +69,8 @@ void Chunk::Update()
 					cubeBuilder.AddFaces(Direction::Top);
 				if (!IsPresent(current + neighbours[(int)Direction::Bottom]))
 					cubeBuilder.AddFaces(Direction::Bottom);
-				// m_Blocks[i][j][k] = new Cube(cubeBuilder);
 				cubeBuilder.AddBlockType(m_BlockName[i][j][k]);
-				CubeRenderer::AddCube(cubeBuilder, {i, j, k});
+				CubeRenderer::DrawCube(cubeBuilder, {i, j, k});
 			}
 		}
 	}

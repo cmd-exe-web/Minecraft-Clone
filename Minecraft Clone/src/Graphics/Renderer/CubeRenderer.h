@@ -6,7 +6,7 @@
 
 class CubeRenderer{
 public:
-	static void AddCube(CubeBuilder cubeBuilder, glm::vec3 position);
+	static void DrawCube(CubeBuilder cubeBuilder, glm::vec3 position);
 
 	static void Init();
 	static void Shutdown();

@@ -91,7 +91,7 @@ void CubeRenderer::ResetStats()
 	s_Data.RenderStats.DrawCount = 0;
 }
 
-void CubeRenderer::AddCube(CubeBuilder cubeBuilder, glm::vec3 position)
+void CubeRenderer::DrawCube(CubeBuilder cubeBuilder, glm::vec3 position)
 {
 	if( s_Data.VertexCount + 24 >= MAX_VERTEX_COUNT ||
 		s_Data.IndexCount + 36 >= MAX_INDEX_COUNT)

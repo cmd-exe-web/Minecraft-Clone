@@ -1,7 +1,7 @@
 #pragma once
 
 enum class BlockName {
-	Dirt, Cobblestone
+	None = 0, Dirt, Cobblestone
 };
 
 struct Face {

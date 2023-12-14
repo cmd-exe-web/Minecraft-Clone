@@ -11,7 +11,7 @@ public:
 	Chunk();
 	~Chunk();
 
-	void Update();
+	void Render();
 	bool IsVisible(glm::i32vec3 position);
 	bool IsPresent(glm::i32vec3 position);
 private:
