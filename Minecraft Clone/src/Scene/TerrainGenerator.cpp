@@ -2,9 +2,11 @@
 
 #include "FastNoiseLite/FastNoiseLite.h"
 
+#include "AssetManager/BlockType.h"
+
 namespace TerrainGenerator {
 
-	void GenerateRandomTerrain(bool chunk[16][256][16])
+	void GenerateRandomTerrain(BlockName chunk[16][256][16])
 	{
 		float frequency = 0.0099f;
 		float cellularJitter = 0.45f; // Amplitude-like effect
@@ -26,7 +28,7 @@ namespace TerrainGenerator {
 				int height = normalizedValue * 256;
 
 				for (int j = 0; j < height; j++) {
-					chunk[i][j][k] = true;
+					chunk[i][j][k] = BlockName::Dirt;
 				}
 			}
 		}

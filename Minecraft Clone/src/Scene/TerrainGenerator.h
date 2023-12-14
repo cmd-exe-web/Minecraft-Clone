@@ -1,7 +1,9 @@
 #pragma once
 
+enum class BlockName;
+
 namespace TerrainGenerator {
 
-	void GenerateRandomTerrain(bool chunk[16][256][16]);
+	void GenerateRandomTerrain(BlockName chunk[16][256][16]);
 
 }
