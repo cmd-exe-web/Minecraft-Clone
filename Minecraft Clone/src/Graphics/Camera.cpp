@@ -12,10 +12,10 @@
 Camera::Camera()
 	:m_Roll(0.0f), m_Pitch(0.0f), m_Yaw(0.0f), m_FirstMouse(true), m_ViewMatrix(glm::mat4(1.0f)), m_ViewDirection(glm::vec3(0.0f, 0.0f, -1.0f)), m_LastMousePosition(glm::vec2(0.0f, 0.0f)), m_UP(glm::vec3(0.0f, 1.0f, 0.0f))
 {
-	// m_Position = glm::vec3(0.0f, 0.0f, 2.0f);
-	m_ProjectionMatrix = glm::perspective(glm::radians(70.0f), (float)SCREEN_WIDTH / SCREEN_HEIGHT, 0.1f, 100.0f);
-	m_Position = glm::vec3(27.3611069, 171.979507, -5.54837418);
-	m_ViewDirection = glm::vec3(-0.581359565, -0.784234941, 0.216787115);
+	m_Position = glm::vec3(0.0f, 0.0f, 2.0f);
+	m_ProjectionMatrix = glm::perspective(glm::radians(70.0f), (float)SCREEN_WIDTH / SCREEN_HEIGHT, 0.1f, 1000.0f);
+	// m_Position = glm::vec3(27.3611069, 171.979507, -5.54837418);
+	// m_ViewDirection = glm::vec3(-0.581359565, -0.784234941, 0.216787115);
 }
 
 Camera::~Camera()
@@ -97,10 +97,10 @@ void Camera::ProcessKeyboardEvents(GLFWwindow* window)
 		m_Position += -m_CameraSpeed * m_UP;
 	}
 	if (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS){
-		m_CameraSpeed = 0.25f;
+		m_CameraSpeed = 2.0f;
 	}
 	if (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_RELEASE){
-		m_CameraSpeed = 0.09f;
+		m_CameraSpeed = 0.9f;
 	}
 }
 

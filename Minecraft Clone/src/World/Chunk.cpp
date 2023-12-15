@@ -1,7 +1,9 @@
 #include "Chunk.h"
 
 #include "Graphics/Renderer/CubeRenderer.h"
-#include "Scene/TerrainGenerator.h"
+#include "World/TerrainGenerator.h"
+
+const int CHUNK_LENGTH = 16;
 
 glm::i32vec3 neighbours[6] = {
 	{  0,  0,  1 },
@@ -12,18 +14,17 @@ glm::i32vec3 neighbours[6] = {
 	{  0, -1,  0 },
 };
 
-Chunk::Chunk()
-	:m_ChunkSize({CHUNK_SIZE_X, CHUNK_SIZE_Y, CHUNK_SIZE_Z})
+Chunk::Chunk(glm::i32vec3 chunkPosition)
+	:m_ChunkPosition(chunkPosition), m_ChunkSize({ CHUNK_SIZE_X, CHUNK_SIZE_Y, CHUNK_SIZE_Z })
 {
-	memset(m_BlockName, 0, sizeof(m_BlockName));
-	TerrainGenerator::GenerateRandomTerrain(m_BlockName);
+	TerrainGenerator::GenerateFlatTerrain(m_BlockName);
 }
 
 Chunk::~Chunk()
 {
 }
 
-void Chunk::Render()
+void Chunk::Render() const
 {
 	for (int i = 0; i < m_ChunkSize.x; i++) {
 		for (int j = 0; j < m_ChunkSize.y; j++) {
@@ -46,13 +47,13 @@ void Chunk::Render()
 				if (!IsPresent(current + neighbours[(int)Direction::Bottom]))
 					cubeBuilder.AddFaces(Direction::Bottom);
 				cubeBuilder.AddBlockType(m_BlockName[i][j][k]);
-				CubeRenderer::DrawCube(cubeBuilder, {i, j, k});
+				CubeRenderer::DrawCube(cubeBuilder, { i + m_ChunkPosition.x * CHUNK_LENGTH, j, k + m_ChunkPosition.z * CHUNK_LENGTH });
 			}
 		}
 	}
 }
 
-bool Chunk::IsVisible(glm::i32vec3 position)
+bool Chunk::IsVisible(glm::i32vec3 position) const
 {
 	for (const auto& neighbour : neighbours) {
 		if (!IsPresent(position + neighbour))
@@ -61,7 +62,7 @@ bool Chunk::IsVisible(glm::i32vec3 position)
 	return false;
 }
 
-bool Chunk::IsPresent(glm::i32vec3 position)
+bool Chunk::IsPresent(glm::i32vec3 position) const
 {
 	if (position.x < 0 || position.y < 0 || position.z < 0 || position.x == m_ChunkSize.x || position.y == m_ChunkSize.y || position.z == m_ChunkSize.z)
 		return false;

@@ -6,7 +6,7 @@
 
 namespace TerrainGenerator {
 
-	void GenerateRandomTerrain(BlockName chunk[16][256][16])
+	void GenerateRandomTerrain(std::vector<std::vector<std::vector<BlockName>>>& chunk)
 	{
 		float frequency = 0.0099f;
 		float cellularJitter = 0.45f; // Amplitude-like effect
@@ -29,6 +29,22 @@ namespace TerrainGenerator {
 
 				for (int j = 0; j < height; j++) {
 					chunk[i][j][k] = BlockName::Dirt;
+				}
+			}
+		}
+	}
+
+	void GenerateFlatTerrain(std::vector<std::vector<std::vector<BlockName>>>& chunk)
+	{
+		for (int i = 0; i < 16; i++) {
+			for (int j = 0; j < 256; j++) {
+				for (int k = 0; k < 16; k++) {
+					if (j < 2) {
+						chunk[i][j][k] = BlockName::Dirt;
+					}
+					else {
+						chunk[i][j][k] = BlockName::None;
+					}
 				}
 			}
 		}

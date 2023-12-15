@@ -10,8 +10,9 @@
 #include "Graphics/Texture.h"
 
 #include "Graphics/Renderer/CubeRenderer.h"
-#include "Scene/Chunk.h"
+#include "World/Chunk.h"
 #include "AssetManager/ConfigurationManager.h"
+#include "World/ChunkManager.h"
 
 namespace MyCraft {
 
@@ -43,7 +44,7 @@ namespace MyCraft {
 
 		GLFWwindow* window = m_Window.GetHandle();
 
-		Chunk chunk;
+		ChunkManager chunkManager(4);
 
 		double lastTime = glfwGetTime();
 		int frameCount = 0;
@@ -74,6 +75,7 @@ namespace MyCraft {
 				glPolygonMode(GL_FRONT_AND_BACK, m_WireFrameMode ? GL_LINE : GL_FILL);
 			}
 			camera.Update();
+			chunkManager.Update(camera.GetCameraPosition());
 
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -81,9 +83,8 @@ namespace MyCraft {
 			shader.SetUniformMat4("u_View", camera.GetViewMatrix());
 
 			CubeRenderer::BeginBatch();
-			chunk.Render();
+			chunkManager.Render();
 			CubeRenderer::EndBatch();
-
 
 			CubeRenderer::Flush();
 

@@ -63,7 +63,7 @@
     <ClCompile Include="src\Graphics\Shapes\Cube.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Scene\Chunk.cpp">
+    <ClCompile Include="src\World\Chunk.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Graphics\Renderer\CubeRenderer.cpp">
@@ -72,7 +72,10 @@
     <ClCompile Include="src\AssetManager\ConfigurationManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Scene\TerrainGenerator.cpp">
+    <ClCompile Include="src\World\TerrainGenerator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\World\ChunkManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -971,7 +974,7 @@
     <ClInclude Include="src\Graphics\Shapes\Builder\CubeBuilder.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Scene\Chunk.h">
+    <ClInclude Include="src\World\Chunk.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Graphics\Renderer\CubeRenderer.h">
@@ -989,7 +992,10 @@
     <ClInclude Include="vendor\FastNoiseLite\FastNoiseLite.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Scene\TerrainGenerator.h">
+    <ClInclude Include="src\World\TerrainGenerator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\World\ChunkManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -1404,7 +1410,6 @@
     </None>
     <None Include="res\shaders\Basic.shader" />
     <None Include="res\shaders\Texture.shader" />
-    <None Include="res\texture_mappings.json" />
     <None Include="src\AssetManager\texture_mappings.json" />
   </ItemGroup>
 </Project>

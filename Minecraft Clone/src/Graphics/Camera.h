@@ -16,8 +16,9 @@ public:
 
 	inline glm::mat4 GetViewMatrix() const { return m_ViewMatrix; }
 	inline glm::mat4 GetProjectionMatrix() const { return m_ProjectionMatrix; }
+	inline glm::vec3 GetCameraPosition() const { return m_Position; }
 private:
-	float m_CameraSpeed = 0.09f; // TODO: Compensate for delta time
+	float m_CameraSpeed = 0.9f; // TODO: Compensate for delta time
 
 	float m_Roll;  // Rotation around view direction axis
 	float m_Pitch; // Rotation around camera's left direction axis (for moving the camera up or down)
