@@ -39,7 +39,7 @@ namespace TerrainGenerator {
 		for (int i = 0; i < 16; i++) {
 			for (int j = 0; j < 256; j++) {
 				for (int k = 0; k < 16; k++) {
-					if (j < 2) {
+					if (j < 3) {
 						chunk[i][j][k] = BlockName::Dirt;
 					}
 					else {

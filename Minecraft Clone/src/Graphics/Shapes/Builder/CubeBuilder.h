@@ -15,7 +15,7 @@ public:
 	CubeBuilder();
 	~CubeBuilder();
 
-	void AddFaces(Direction direction);
+	void AddFace(Direction direction);
 	void AddBlockType(BlockName name);
 	bool VisibleFaces[6];
 	BlockName Name;

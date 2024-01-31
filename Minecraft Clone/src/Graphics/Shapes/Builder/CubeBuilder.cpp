@@ -11,7 +11,7 @@ CubeBuilder::~CubeBuilder()
 {
 }
 
-void CubeBuilder::AddFaces(Direction direction)
+void CubeBuilder::AddFace(Direction direction)
 {
 	VisibleFaces[(int)direction] = true;
 }

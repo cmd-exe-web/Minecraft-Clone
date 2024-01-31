@@ -31,13 +31,18 @@ void ChunkManager::UnloadChunks(glm::vec3 playerPosition)
 {
 	int playerChunkX = (int)playerPosition.x / 16;
 	int playerChunkZ = (int)playerPosition.z / 16;
-	for (auto it = m_LoadedChunks.begin(); it != m_LoadedChunks.end(); it++) {
+	for (auto it = m_LoadedChunks.begin();
+		it != m_LoadedChunks.end(); /* No increment here */) {
 		int chunkX = it->first;
 		int chunkZ = it->second;
 
 		if (std::abs(chunkX - playerChunkX) > m_RenderDistance || std::abs(chunkZ - playerChunkZ) > m_RenderDistance) {
+			auto validIterator = m_LoadedChunks.erase(it);
 			UnloadChunk(chunkX, chunkZ);
-			m_LoadedChunks.erase(it);
+			it = validIterator;
+		}
+		else {
+			it++;
 		}
 	}
 }
@@ -74,6 +79,6 @@ bool ChunkManager::IsChunkLoaded(int chunkX, int chunkZ) const
 void ChunkManager::Render()
 {
 	for (const auto& chunk : m_Chunks) {
-		chunk.Render();
+		chunk.Render(*this);
 	}
 }

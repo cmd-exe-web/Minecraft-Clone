@@ -1,7 +1,10 @@
 #include "Chunk.h"
 
+#include <utility>
+
 #include "Graphics/Renderer/CubeRenderer.h"
 #include "World/TerrainGenerator.h"
+#include "ChunkManager.h"
 
 const int CHUNK_LENGTH = 16;
 
@@ -24,7 +27,7 @@ Chunk::~Chunk()
 {
 }
 
-void Chunk::Render() const
+void Chunk::Render(ChunkManager& chunkManager) const
 {
 	for (int i = 0; i < m_ChunkSize.x; i++) {
 		for (int j = 0; j < m_ChunkSize.y; j++) {
@@ -32,25 +35,94 @@ void Chunk::Render() const
 				if (!IsPresent({i, j, k}) || !IsVisible({i, j, k})) {
 					continue;
 				}
+				auto [atOuterSurface, adjacentChunkPosition] = IsOuterBlock({i, j, k});
+				if (atOuterSurface && chunkManager.IsChunkLoaded(adjacentChunkPosition.x, adjacentChunkPosition.z)) {
+					if (!IsPresent({ i, j + 1, k })) {
+						CubeBuilder cubeBuilder;
+						cubeBuilder.AddFace(Direction::Top);
+						cubeBuilder.AddBlockType(BlockName::Dirt);
+						CubeRenderer::DrawCube(cubeBuilder, { i + m_ChunkPosition.x * CHUNK_LENGTH, j, k + m_ChunkPosition.z * CHUNK_LENGTH });
+					}
+					if (!IsPresent({ i, j - 1, k })) {
+						CubeBuilder cubeBuilder;
+						cubeBuilder.AddFace(Direction::Bottom);
+						cubeBuilder.AddBlockType(BlockName::Dirt);
+						CubeRenderer::DrawCube(cubeBuilder, { i + m_ChunkPosition.x * CHUNK_LENGTH, j, k + m_ChunkPosition.z * CHUNK_LENGTH });
+					}
+					continue;
+				}
+
 				CubeBuilder cubeBuilder;
 				glm::i32vec3 current(i, j, k);
 				if (!IsPresent(current + neighbours[(int)Direction::Front]))
-					cubeBuilder.AddFaces(Direction::Front);
+					cubeBuilder.AddFace(Direction::Front);
 				if (!IsPresent(current + neighbours[(int)Direction::Back]))
-					cubeBuilder.AddFaces(Direction::Back);
+					cubeBuilder.AddFace(Direction::Back);
 				if (!IsPresent(current + neighbours[(int)Direction::Left]))
-					cubeBuilder.AddFaces(Direction::Left);
+					cubeBuilder.AddFace(Direction::Left);
 				if (!IsPresent(current + neighbours[(int)Direction::Right]))
-					cubeBuilder.AddFaces(Direction::Right);
+					cubeBuilder.AddFace(Direction::Right);
 				if (!IsPresent(current + neighbours[(int)Direction::Top]))
-					cubeBuilder.AddFaces(Direction::Top);
+					cubeBuilder.AddFace(Direction::Top);
 				if (!IsPresent(current + neighbours[(int)Direction::Bottom]))
-					cubeBuilder.AddFaces(Direction::Bottom);
+					cubeBuilder.AddFace(Direction::Bottom);
 				cubeBuilder.AddBlockType(m_BlockName[i][j][k]);
 				CubeRenderer::DrawCube(cubeBuilder, { i + m_ChunkPosition.x * CHUNK_LENGTH, j, k + m_ChunkPosition.z * CHUNK_LENGTH });
 			}
 		}
 	}
+}
+
+bool Chunk::IsFaceVisible(Direction faceDirection, const glm::i32vec3& position) const
+{
+	switch (faceDirection)
+	{
+	case Direction::Front:
+		break;
+	case Direction::Back:
+		break;
+	case Direction::Left:
+		break;
+	case Direction::Right:
+		break;
+	case Direction::Top:
+		if (position.y + 1 <= m_ChunkSize.y && m_BlockName[position.x][position.y + 1][position.z] == BlockName::None)
+			return true;
+		else
+			return false;
+		break;
+	case Direction::Bottom:
+		if (position.y - 1 >= 0 && m_BlockName[position.x][position.y - 1][position.z] == BlockName::None)
+			return true;
+		else
+			false;
+		break;
+	default:
+		break;
+	}
+}
+
+
+// Checks if the block is at the outer side of the chunk and returns the direction it is exposed at
+std::pair<bool, glm::i32vec3> Chunk::IsOuterBlock(const glm::i32vec3& blockPosition) const
+{
+	const int& x = blockPosition.x;
+	const int& z = blockPosition.z;
+
+	if (x == 0) {
+		return { true, {m_ChunkPosition.x - 1, m_ChunkPosition.y, m_ChunkPosition.z} };
+	}
+	if (x == m_ChunkSize.x - 1) {
+		return { true, {m_ChunkPosition.x + 1, m_ChunkPosition.y, m_ChunkPosition.z} };
+	}
+	if (z == 0) {
+		return { true, {m_ChunkPosition.x, m_ChunkPosition.y, m_ChunkPosition.z - 1} };
+	}
+	if (z == m_ChunkSize.z - 1) {
+		return { true, {m_ChunkPosition.x, m_ChunkPosition.y, m_ChunkPosition.z + 1} };
+	}
+	
+	return { false, {} };
 }
 
 bool Chunk::IsVisible(glm::i32vec3 position) const

@@ -44,7 +44,7 @@ namespace MyCraft {
 
 		GLFWwindow* window = m_Window.GetHandle();
 
-		ChunkManager chunkManager(4);
+		ChunkManager chunkManager(1);
 
 		double lastTime = glfwGetTime();
 		int frameCount = 0;
@@ -76,6 +76,7 @@ namespace MyCraft {
 			}
 			camera.Update();
 			chunkManager.Update(camera.GetCameraPosition());
+			
 
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
